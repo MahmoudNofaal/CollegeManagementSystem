@@ -12,9 +12,9 @@ namespace CollegeSystem.UI;
 
 public class ManagerPage
 {
-  public static List<Person> users = new List<Person>();
-  public static List<Course> courses = new List<Course>();
-  public static List<Exam> exams = new List<Exam>();
+  //public static List<Person> users = new List<Person>();
+  //public static List<Course> courses = new List<Course>();
+  //public static List<Exam> exams = new List<Exam>();
 
   public static Manager _sessionManager = new Manager();
 

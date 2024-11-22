@@ -59,24 +59,34 @@ public class Student : Person
   {
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ National Id:[/] [{color}]{NationalId}[/]\n");
+
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Code:[/] [{color}]{Code}[/]\n");
+
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Name:[/] [{color}]{Name}[/]\n");
+
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Password:[/] [{color}]{Password}[/]\n");
+
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Email:[/] [{color}]{Email}[/]\n");
+
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Department:[/] [{color}]{Department}[/]\n");
+
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Gpa:[/] [{color}]{GPA}[/]\n");
+
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Grade:[/] [{color}]{Grade}[/]\n");
+
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Gender:[/] [{color}]{Gender}[/]\n");
+
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Year Of Study:[/] [{color}]{YearOfStudy}[/]\n");
+
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]└─ Enrolled Courses :[/] [{color}]{string.Join(",", EnrolledCourses)}[/]\n");
 
