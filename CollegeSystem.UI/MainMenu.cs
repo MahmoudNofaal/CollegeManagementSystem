@@ -25,7 +25,7 @@ public class MainMenu
 
   private readonly AuthenticationService _authService;
 
-  [Obsolete]
+
   public MainMenu(AuthenticationService authService)
   {
     _authService = authService;
@@ -33,7 +33,7 @@ public class MainMenu
     Display();
   }
 
-  [Obsolete]
+
   public void Display()
   {
     var rule = new Rule("[lightcyan1]College Management System[/]");
@@ -42,7 +42,7 @@ public class MainMenu
 
     var panel = new Panel($"[white] Welcome to the [lightcyan1]{Manager.CollegeName}[/] Management System  [/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     Console.WriteLine("╔═════════════════════════════════════╗");
     AnsiConsole.MarkupLine("║ ★ [white][italic]Get To [lightcyan1]College Management System[/][/][/]  ║");
@@ -94,7 +94,7 @@ public class MainMenu
     Display();
   }
 
-  [Obsolete]
+
   private void SignIn()
   {
     Console.Clear();
@@ -106,11 +106,11 @@ public class MainMenu
 
     var panel = new Panel($"[white] Welcome to the [lightcyan1]{Manager.CollegeName}[/] Management System  [/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     var panel02 = new Panel($"[bold] [lightcyan1]SIGN IN[/]  [/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel02);
+    AnsiConsole.Write(panel02);
 
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
     var option = Console.ReadLine();
@@ -164,7 +164,7 @@ public class MainMenu
     }
   }
 
-  [Obsolete]
+
   private void SignUp()
   {
     Console.Clear();
@@ -176,12 +176,12 @@ public class MainMenu
 
     var panel = new Panel($"[bold] Welcome to the [lightcyan1]{Manager.CollegeName}[/] Management System  [/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
 
     var panel02 = new Panel($"[bold] [lightcyan1]SIGN UP[/]  [/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel02);
+    AnsiConsole.Write(panel02);
 
     Console.WriteLine();
 

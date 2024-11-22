@@ -25,27 +25,27 @@ public class UserRepository
 
         foreach (var user in users.OfType<Doctor>())
         {
-          writer.WriteLine(
-                            $"{user.NationalId}|" +
-                            $"{user.Code}|" +
-                            $"{user.Name}|" +
-                            $"{user.Password}|" +
-                            $"{user.Email}|" +
-                            $"{user.Department}|" +
-                            $"{user.Activate}|" +
-                            $"{user.DateOfHire}|" +
-                            $"{string.Join(",", user.CoursesTaughtCodes)}|" +
-                            $"{string.Join(",", user.DoctorExamsCodes)}"
+          writer.WriteLine($"{user.NationalId}|" +
+                           $"{user.Code}|" +
+                           $"{user.Name}|" +
+                           $"{user.Password}|" +
+                           $"{user.Email}|" +
+                           $"{user.Department}|" +
+                           $"{user.IsEmailActivate}|" +
+                           $"{user.DateOfHire}|" +
+                           $"{string.Join(",", user.CoursesTaughtCodes)}|" +
+                           $"{string.Join(",", user.DoctorExamsCodes)}"
                           );
         }
       }
 
-    }
+    }//end Of Try
     catch (Exception ex)
     {
       Console.WriteLine($"Error saving data: {ex.Message}");
     }
   }
+
   public void SaveStudentData(List<Student> users)
   {
     try
@@ -63,17 +63,17 @@ public class UserRepository
                             $"{user.Password}|" +
                             $"{user.Email}|" +
                             $"{user.Department}|" +
-                            $"{user.Activate}|" +
+                            $"{user.IsEmailActivate}|" +
                             $"{user.GPA}|" +
                             $"{user.Grade}|" +
                             $"{user.Gender}|" +
                             $"{user.YearOfStudy}|" +
-                            $"{string.Join(",", user.EnrolledCourses)}"
+                            $"{string.Join(",", user.EnrolledCoursesCodes)}"
                           );
         }
       }
 
-    }
+    }//endOf Try
     catch (Exception ex)
     {
       Console.WriteLine($"Error saving data: {ex.Message}");
@@ -95,7 +95,7 @@ public class UserRepository
                             $"{user.Password}|" +
                             $"{user.Email}|" +
                             $"{user.Department}|"+
-                            $"{user.Activate}"
+                            $"{user.IsEmailActivate}"
                           );
         }
       }

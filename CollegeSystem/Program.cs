@@ -11,7 +11,7 @@ namespace CollegeSystem;
 
 internal class Program
 {
-  [Obsolete]
+
   static void Main(string[] args)
   {
     Console.OutputEncoding = Encoding.UTF8;

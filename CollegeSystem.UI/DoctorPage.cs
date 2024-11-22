@@ -12,7 +12,7 @@ public class DoctorPage
 {
   public static Doctor _sessionDoctor = new Doctor();
 
-  [Obsolete]
+
   public DoctorPage(Doctor sessionDoctor)
   {
     DoctorOperations.sessionDoctor = sessionDoctor;
@@ -21,7 +21,7 @@ public class DoctorPage
     PrintMainMenuOptions();
   }
 
-  [Obsolete]
+
   private void PrintMainMenuOptions()
   {
     Console.Clear();
@@ -33,7 +33,7 @@ public class DoctorPage
 
     var panel = new Panel($"[white]Doctor System Of College [/][lightcyan1]{Manager.CollegeName}[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     AnsiConsole.Markup($"[bold]● Welcome Doctor: [lightcyan1]{_sessionDoctor.Name}[/] To College System\n\n[/]");
 
@@ -50,20 +50,6 @@ public class DoctorPage
     Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━┓");
     AnsiConsole.MarkupLine("┃  [lightcyan1][italic]Main Menu Option[/][/]  ┃");
     Console.WriteLine("┗━━━━━━━━━━━━━━━━━━━━┛");
-
-
-    //for (int i = 0; i < mainMenuOptions.Length - 1; i++)
-    //{
-    //  Thread.Sleep(40);
-    //  //Console.WriteLine($"╠ {i + 1}. {mainMenuOptions[i]}");
-    //  AnsiConsole.MarkupLine($"┣━━ [lightcyan1]{i + 1}.[/] [grey89]{mainMenuOptions[i]}[/]");
-
-    //}
-    //AnsiConsole.MarkupLine($"┗━━ [lightcyan1]{mainMenuOptions.Length}.[/] [grey89]{mainMenuOptions[mainMenuOptions.Length - 1]}[/]");
-    //Console.WriteLine();
-
-    //int index = Operation.GetValidIntInput("▶ Please enter ", "index", 1, mainMenuOptions.Length);
-
 
     var selection = AnsiConsole.Prompt(
   new SelectionPrompt<string>()
@@ -97,7 +83,6 @@ public class DoctorPage
 
   }
 
-  [Obsolete]
   private void ViewPersonalInfo()
   {
     Console.Clear();
@@ -108,7 +93,7 @@ public class DoctorPage
 
     var panel = new Panel($"[lightcyan1]View Personal Info[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     string[] userMenuOptions =
     {
@@ -120,18 +105,6 @@ public class DoctorPage
     Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
     AnsiConsole.MarkupLine("┃  [lightcyan1][italic]Doctor Info Menu Option[/][/]  ┃");
     Console.WriteLine("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-
-    //for (int i = 0; i < userMenuOptions.Length - 1; i++)
-    //{
-    //  Thread.Sleep(50);
-    //  //Console.WriteLine($"╠ {i + 1}. {mainMenuOptions[i]}");
-    //  AnsiConsole.MarkupLine($"┣━━ [lightcyan1]{i + 1}.[/] [grey89]{userMenuOptions[i]}[/]");
-    //}
-    //AnsiConsole.MarkupLine($"┗━━ [lightcyan1]{userMenuOptions.Length}.[/] [grey89]{userMenuOptions[userMenuOptions.Length - 1]}[/]");
-    //Console.WriteLine();
-
-    //int index = Operation.GetValidIntInput("Please enter ", "index", 1, userMenuOptions.Length);
-
 
     var selection = AnsiConsole.Prompt(
   new SelectionPrompt<string>()
@@ -158,7 +131,7 @@ public class DoctorPage
     ViewPersonalInfo();
   }
 
-  [Obsolete]
+
   private void ManageCourses()
   {
     Console.Clear();
@@ -169,7 +142,7 @@ public class DoctorPage
 
     var panel = new Panel($"[lightcyan1]Manage Courses[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     string[] userMenuOptions =
     {
@@ -183,18 +156,6 @@ public class DoctorPage
     Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
     AnsiConsole.MarkupLine("┃  [lightcyan1][italic]Manage Courses Menu Option[/][/]  ┃");
     Console.WriteLine("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-
-    //for (int i = 0; i < userMenuOptions.Length - 1; i++)
-    //{
-    //  Thread.Sleep(50);
-    //  //Console.WriteLine($"╠ {i + 1}. {mainMenuOptions[i]}");
-    //  AnsiConsole.MarkupLine($"┣━━ [lightcyan1]{i + 1}.[/] [grey89]{userMenuOptions[i]}[/]");
-    //}
-    //AnsiConsole.MarkupLine($"┗━━ [lightcyan1]{userMenuOptions.Length}.[/] [grey89]{userMenuOptions[userMenuOptions.Length - 1]}[/]");
-    //Console.WriteLine();
-
-    //int index = Operation.GetValidIntInput("Please enter ", "index", 1, userMenuOptions.Length);
-
 
     var selection = AnsiConsole.Prompt(
   new SelectionPrompt<string>()
@@ -224,7 +185,7 @@ public class DoctorPage
     ManageCourses();
   }
 
-  [Obsolete]
+
   private void ManageExams()
   {
     Console.Clear();
@@ -235,7 +196,7 @@ public class DoctorPage
 
     var panel = new Panel($"[lightcyan1]View Personal Info[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     string[] userMenuOptions =
     {
@@ -248,19 +209,6 @@ public class DoctorPage
     Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
     AnsiConsole.MarkupLine("┃  [lightcyan1][italic]Manage Exams Menu Option[/][/]  ┃");
     Console.WriteLine("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-
-    //for (int i = 0; i < userMenuOptions.Length - 1; i++)
-    //{
-    //  Thread.Sleep(50);
-    //  //Console.WriteLine($"╠ {i + 1}. {mainMenuOptions[i]}");
-    //  AnsiConsole.MarkupLine($"┣━━ [lightcyan1]{i + 1}.[/] [grey89]{userMenuOptions[i]}[/]");
-    //}
-    //AnsiConsole.MarkupLine($"┗━━ [lightcyan1]{userMenuOptions.Length}.[/] [grey89]{userMenuOptions[userMenuOptions.Length - 1]}[/]");
-    //Console.WriteLine();
-
-    //int index = Operation.GetValidIntInput("Please enter ", "index", 1, userMenuOptions.Length);
-
-
 
     var selection = AnsiConsole.Prompt(
   new SelectionPrompt<string>()

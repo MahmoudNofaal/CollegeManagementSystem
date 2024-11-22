@@ -23,21 +23,21 @@ public class AuthenticationService
   {
     // Check in Doctor repository
     var doctor = _userRepository.LoadDoctors().FirstOrDefault(d => d.Code == code && d.Password == password);
-    if (doctor != null && doctor.Activate)
+    if (doctor != null && doctor.IsEmailActivate)
     {
       return doctor;
     }
 
     // Check in Student repository
     var student = _userRepository.LoadStudents().FirstOrDefault(s => s.Code == code && s.Password == password);
-    if (student != null && student.Activate)
+    if (student != null && student.IsEmailActivate)
     {
       return student;
     }
 
     // Check in Manager repository
     var manager = _userRepository.LoadManagers().FirstOrDefault(s => s.Code == code && s.Password == password);
-    if (manager != null && manager.Activate)
+    if (manager != null && manager.IsEmailActivate)
     {
       return manager;
     }
@@ -50,9 +50,9 @@ public class AuthenticationService
     var managers = _userRepository.LoadManagers();
     var manager = managers.FirstOrDefault(d => d.NationalId == nationalId);
 
-    if (manager != null && !manager.Activate)
+    if (manager != null && !manager.IsEmailActivate)
     {
-      manager.Activate = true;
+      manager.IsEmailActivate = true;
       manager.Password = password;
       _userRepository.SaveManagerData(managers);
       return true;
@@ -64,9 +64,9 @@ public class AuthenticationService
     var doctors = _userRepository.LoadDoctors();
     var doctor = doctors.FirstOrDefault(d => (d.NationalId == nationalId));
 
-    if (doctor != null && !doctor.Activate)
+    if (doctor != null && !doctor.IsEmailActivate)
     {
-      doctor.Activate = true;
+      doctor.IsEmailActivate = true;
       AnsiConsole.MarkupLine($"● Doctor Code for Sign In: [lightcyan1]{doctor.Code}[/]");
       doctor.Password = password;
       _userRepository.SaveDoctorData(doctors);
@@ -79,9 +79,9 @@ public class AuthenticationService
     var students = _userRepository.LoadStudents();
     var student = students.FirstOrDefault(s => s.NationalId == nationalId);
 
-    if (student != null && !student.Activate)
+    if (student != null && !student.IsEmailActivate)
     {
-      student.Activate = true;
+      student.IsEmailActivate = true;
       AnsiConsole.MarkupLine($"● Student Code for Sign In: [lightcyan1]{student.Code}[/]");
       student.Password = password;
       _userRepository.SaveStudentData(students);

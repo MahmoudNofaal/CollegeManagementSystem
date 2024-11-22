@@ -13,7 +13,6 @@ public class StudentPage
 {
   public static Student _sessionStudent = new Student();
 
-  [Obsolete]
   public StudentPage(Student sessionStudent)
   {
     StudentOperations.sessionStudent = sessionStudent;
@@ -23,7 +22,7 @@ public class StudentPage
     PrintMainMenuOptions();
   }
 
-  [Obsolete]
+
   private void PrintMainMenuOptions()
   {
     while (true)
@@ -37,7 +36,7 @@ public class StudentPage
 
       var panel = new Panel($"[white]Student System Of College [/][thistle1]{Manager.CollegeName}[/]")
       .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-      AnsiConsole.Render(panel);
+      AnsiConsole.Write(panel);
 
       AnsiConsole.Markup($"[bold]● Welcome Student: [thistle1]{_sessionStudent.Name}[/] To College System\n\n[/]");
 
@@ -86,7 +85,7 @@ public class StudentPage
     }
   }
 
-  [Obsolete]
+
   private void ViewPersonalInfo()
   {
     Console.Clear();
@@ -97,7 +96,7 @@ public class StudentPage
 
     var panel = new Panel($"[thistle1]View Personal Info[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     string[] userMenuOptions =
     {
@@ -137,7 +136,7 @@ public class StudentPage
     ViewPersonalInfo();
   }
 
-  [Obsolete]
+
   private void CoursesSection()
   {
     Console.Clear();
@@ -148,7 +147,7 @@ public class StudentPage
 
     var panel = new Panel($"[thistle1]Course Section[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     string[] courseMenuOptions =
     {
@@ -192,7 +191,6 @@ public class StudentPage
     CoursesSection();
   }
 
-  [Obsolete]
   private void ViewExamsSchedule()
   {
     Console.Clear();
@@ -202,7 +200,7 @@ public class StudentPage
 
     var panel = new Panel($"[thistle1]View Exams Schedule[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     string[] userMenuOptions =
     {

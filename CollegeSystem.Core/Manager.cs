@@ -29,12 +29,7 @@ public class Manager : Person
   {
   }
 
-  public override string ToString()
-  {
-    return base.ToString();
-  }
 
-  [Obsolete]
   public override void PrintUser(string color)
   {
     Thread.Sleep(40);

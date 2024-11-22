@@ -18,7 +18,7 @@ public class ManagerPage
 
   public static Manager _sessionManager = new Manager();
 
-  [Obsolete]
+
   public ManagerPage(Manager sessionUser)
   {
     ManagerOperations.sessionManager = sessionUser;
@@ -28,7 +28,7 @@ public class ManagerPage
     PrintMainMenuOptions();
   }
 
-  [Obsolete]
+
   private void PrintMainMenuOptions()
   {
     Console.Clear();
@@ -40,7 +40,7 @@ public class ManagerPage
 
     var panel = new Panel($"[white]Manager System Of College [/][gold3]{Manager.CollegeName}[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     AnsiConsole.Markup($"[bold]● Welcome Manager: [gold3]{_sessionManager.Name}[/] To College System\n\n[/]");
 
@@ -103,7 +103,7 @@ public class ManagerPage
 
   } //endOf PrintMainMenuOptions
 
-  [Obsolete]
+
   private void ManagerInformation()
   {
     Console.Clear();
@@ -114,7 +114,7 @@ public class ManagerPage
 
     var panel = new Panel($"[gold3]Manager Information[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     string[] userMenuOptions =
     {
@@ -154,7 +154,7 @@ public class ManagerPage
     ManagerInformation();
   }
 
-  [Obsolete]
+
   private void UserManagement()
   {
     Console.Clear();
@@ -165,7 +165,7 @@ public class ManagerPage
 
     var panel = new Panel($"[gold3]User Management[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     string[] userMenuOptions =
     {
@@ -217,7 +217,7 @@ public class ManagerPage
     UserManagement();
   }
 
-  [Obsolete]
+
   private void CourseManagement()
   {
     Console.Clear();
@@ -228,7 +228,7 @@ public class ManagerPage
 
     var panel = new Panel($"[gold3]Course Management[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     string[] courseMenuOptions =
     {

@@ -18,19 +18,19 @@ public static class StudentOperations
 
   public static Student sessionStudent = new();
 
-  [Obsolete]
+
   public static void ViewPersonalProfile()
   {
     var panel01 = new Panel($"[thistle1]View Personal Info[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
 
     AnsiConsole.MarkupLine("[silver]▶ View Personal Details Of Student[/]\n");
 
 
     var panel = new Panel($"[bold]  Student [thistle1]{sessionStudent.Name}[/]  [/]")
     .Border(BoxBorder.Rounded);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     sessionStudent.PrintUser("thistle1");
 
@@ -39,12 +39,12 @@ public static class StudentOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
+
   public static void UpdatePersonalProfile()
   {
     var panel01 = new Panel($"[thistle1]Update Personal Info[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
@@ -81,12 +81,12 @@ public static class StudentOperations
     Operation.FinishOption();
   }
 
-  [Obsolete]
+
   public static void RegisterCourses()
   {
     var panel01 = new Panel($"[thistle1]Register Courses[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
@@ -99,7 +99,7 @@ public static class StudentOperations
     AnsiConsole.MarkupLine("[silver]▶ Show The UnRegistered Course In The System[/]\n");
 
     var doctorsCourses = MainMenu.courses.Where(r => r.DoctorCode != "D000");
-    var unRegisteredCourses = doctorsCourses.Where(r => !sessionStudent.EnrolledCourses.Contains(r.CourseCode)).ToList();
+    var unRegisteredCourses = doctorsCourses.Where(r => !sessionStudent.EnrolledCoursesCodes.Contains(r.CourseCode)).ToList();
 
 
     var root = new Tree($"[bold]▼ UnRegistered Courses [thistle1]{sessionStudent.Department}[/][/]");
@@ -122,7 +122,7 @@ public static class StudentOperations
                           $"[gray] - [/]" +
                           $"[thistle1]{unRegisteredCourses[i].NoOfHours}[/]");
     }
-    AnsiConsole.Render(root);
+    AnsiConsole.Write(root);
 
     Console.WriteLine();
     AnsiConsole.Markup($"[thistle1]Choose courses you want to register: [/]\n");
@@ -139,7 +139,7 @@ public static class StudentOperations
 
       Operation.LoadingOperation("Registering Course to Student Courses...", 50);
 
-      if (sessionStudent.EnrolledCourses.Contains(courseCode))
+      if (sessionStudent.EnrolledCoursesCodes.Contains(courseCode))
       {
         AnsiConsole.Markup($"[lightsteelblue1]Course is already registered![/]\n");
 
@@ -160,7 +160,7 @@ public static class StudentOperations
       int sessionStudentIndex = Operation.GetUserIndex(sessionStudent.Code,2);
 
       //optmize student [enrolled courses] data
-      sessionStudent.EnrolledCourses.Add(courseCode);
+      sessionStudent.EnrolledCoursesCodes.Add(courseCode);
       MainMenu.students[sessionStudentIndex] = sessionStudent;
       MainMenu._userRepository.SaveStudentData(MainMenu.students);
 
@@ -189,19 +189,19 @@ public static class StudentOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
+
   public static void ViewEnrolledCourses()
   {
     var panel01 = new Panel($"[thistle1]View Enrolled Courses[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[silver]▶ View Enrolled Courses By {sessionStudent.Name}[/]\n");
 
 
 
-    var enrolledCourses = MainMenu.courses.Where(r => sessionStudent.EnrolledCourses.Contains(r.CourseCode)).ToList();
+    var enrolledCourses = MainMenu.courses.Where(r => sessionStudent.EnrolledCoursesCodes.Contains(r.CourseCode)).ToList();
 
     // Create a table
     var table = new Table();
@@ -229,16 +229,16 @@ public static class StudentOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
+
   public static void ViewEnrolledCourseDetails()
   {
     var panel01 = new Panel($"[thistle1]View Enrolled Course Details[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[silver]▶ View Enrolled Course Details By {sessionStudent.Name}[/]\n");
-    AnsiConsole.MarkupLine($"[thistle1]Enrolled Courses[/]: ({string.Join(",", sessionStudent.EnrolledCourses)})\n");
+    AnsiConsole.MarkupLine($"[thistle1]Enrolled Courses[/]: ({string.Join(",", sessionStudent.EnrolledCoursesCodes)})\n");
 
 
     Console.WriteLine();
@@ -250,13 +250,13 @@ public static class StudentOperations
     }
 
     string codeInput = Operation.GetValidatedStringInput("● Enter a registered course ", "code");
-    if (codeInput == "Invalid input" || !sessionStudent.EnrolledCourses.Any(c => c == codeInput))
+    if (codeInput == "Invalid input" || !sessionStudent.EnrolledCoursesCodes.Any(c => c == codeInput))
     {
       Operation.OutputMessage("Invalid input");
       return;
     }
 
-    var studentEnrolledCourses = MainMenu.courses.Where(r => sessionStudent.EnrolledCourses.Contains(r.CourseCode)).ToList();
+    var studentEnrolledCourses = MainMenu.courses.Where(r => sessionStudent.EnrolledCoursesCodes.Contains(r.CourseCode)).ToList();
     Course course = studentEnrolledCourses.First(c => c.CourseCode == codeInput);
 
     Console.WriteLine();
@@ -271,12 +271,12 @@ public static class StudentOperations
     Operation.FinishOption();
   }
 
-  [Obsolete]
+
   public static void ViewGrade()
   {
     var panel01 = new Panel($"[thistle1]View Student Grade[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.Markup($"▼ [thistle1]Show Student Grade[/]\n");
@@ -301,17 +301,17 @@ public static class StudentOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
+
   public static void StudentExams()
   {
     var panel01 = new Panel($"[thistle1]View Exams Of Student[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[thistle1]▼ [/][white]Show Student Exams This Year[/]\n");
 
-    var studentExams = sessionStudent.EnrolledCourses.SelectMany(c => MainMenu.exams.Where(e => e.CourseCode == c)).ToList();
+    var studentExams = sessionStudent.EnrolledCoursesCodes.SelectMany(c => MainMenu.exams.Where(e => e.CourseCode == c)).ToList();
 
     //courses.Where(r => sessionStudent.EnrolledCourses.Contains(r.CourseCode)).ToList();
     //var studentExams = MainMenu.exams.Where(c => studentEnrolledCourses.Where(r => r.ExamCode == c.ExamCode)).ToList();
@@ -337,17 +337,17 @@ public static class StudentOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
+
   public static void ViewExamDetails()
   {
     var panel01 = new Panel($"[thistle1]View Enrolled Course Details[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[silver]▶ View Exam Details By Code[/]\n");
 
-    var studentExams = sessionStudent.EnrolledCourses.SelectMany(c => MainMenu.exams.Where(e => e.CourseCode == c)).ToList();
+    var studentExams = sessionStudent.EnrolledCoursesCodes.SelectMany(c => MainMenu.exams.Where(e => e.CourseCode == c)).ToList();
     var studentExamsCodes = new List<string>();
     for (int i = 0; i < studentExams.Count; i++)
     {

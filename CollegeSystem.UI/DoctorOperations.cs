@@ -17,19 +17,18 @@ public static class DoctorOperations
 
   public static Doctor sessionDoctor = new();
 
-  [Obsolete]
   public static void ViewPersonalProfile()
   {
     var panel01 = new Panel($"[lightcyan1]View Personal Info[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[silver]▶ View Personal Details[/]\n");
 
     var panel = new Panel($"[bold]  Doctor [lightcyan1]{sessionDoctor.Name}[/]  [/]")
     .Border(BoxBorder.Rounded);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     sessionDoctor.PrintUser("lightcyan1");
 
@@ -38,12 +37,12 @@ public static class DoctorOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
+
   public static void UpdatePersonalProfile()
   {
     var panel01 = new Panel($"[lightcyan1]Update Personal Info[/]")
    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[silver]▶ Edit Password and Email[/]\n");
@@ -81,12 +80,12 @@ public static class DoctorOperations
     Operation.FinishOption();
   }
 
-  [Obsolete]
+
   public static void AssignCourses()
   {
     var panel01 = new Panel($"[lightcyan1]Assign Courses[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[silver]▶ View UnAssigned Courses In The System[/]\n");
@@ -100,7 +99,7 @@ public static class DoctorOperations
     {
       node = root.AddNode($"[lightcyan1]{i + 1}.[/] [white]{unassignedCourses[i].CourseName}[gray] - [/]{unassignedCourses[i].CourseCode}[/][gray] - [/][lightcyan1]{unassignedCourses[i].ExamCode}[/][gray] - [/][lightcyan1]{unassignedCourses[i].NoOfHours}[/]");
     }
-    AnsiConsole.Render(root);
+    AnsiConsole.Write(root);
 
     Console.WriteLine();
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
@@ -180,12 +179,12 @@ public static class DoctorOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
+
   public static void UnAssignCourses()
   {
     var panel01 = new Panel($"[lightcyan1]UnAssign Courses[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
 
     AnsiConsole.MarkupLine($"[silver]▶ Show Assigned Courses By Dr.{sessionDoctor.Name}[/]\n");
 
@@ -198,7 +197,7 @@ public static class DoctorOperations
     {
       node = root.AddNode($"[lightcyan1]{i + 1}.[/] [white]{assignedCourses[i].CourseName}[gray] - [/]{assignedCourses[i].CourseCode}[/][gray] - [/][lightcyan1]{assignedCourses[i].ExamCode}[/][gray] - [/][lightcyan1]{assignedCourses[i].NoOfHours}[/]");
     }
-    AnsiConsole.Render(root);
+    AnsiConsole.Write(root);
     Console.WriteLine();
 
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
@@ -223,10 +222,10 @@ public static class DoctorOperations
       Operation.LoadingOperation("UnAssigning course...", 40);
 
       //optimize student enrolledCourses data
-      var enrolledStudents = MainMenu.students.Where(r => r.EnrolledCourses.Contains(courseCode)).ToList();
+      var enrolledStudents = MainMenu.students.Where(r => r.EnrolledCoursesCodes.Contains(courseCode)).ToList();
       for (int j = 0; j < enrolledStudents.Count; j++)
       {
-        enrolledStudents[j].EnrolledCourses.Remove(courseCode);
+        enrolledStudents[j].EnrolledCoursesCodes.Remove(courseCode);
 
         int studentIndex = Operation.GetUserIndex(enrolledStudents[j].Code, 2);
         MainMenu.students[studentIndex] = enrolledStudents[j];
@@ -272,12 +271,12 @@ public static class DoctorOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
+
   public static void ViewAssignedCourses()
   {
     var panel01 = new Panel($"[lightcyan1]View Assigned Courses[/]")
    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
 
     AnsiConsole.MarkupLine($"[silver]▶ Show Assigned Courses By Dr. {sessionDoctor.Name}[/]\n");
 
@@ -317,12 +316,12 @@ public static class DoctorOperations
     Operation.FinishOption();
   }
 
-  [Obsolete]
+
   public static void AddExams()
   {
     var panel01 = new Panel($"[lightcyan1]Add Exams[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[lightcyan1]Courses Taught[/]: ({string.Join(",", sessionDoctor.CoursesTaughtCodes)})\n");
@@ -376,12 +375,12 @@ public static class DoctorOperations
       Operation.OutputMessage($"Something went wrong: {ex.Message}");
     }
   }
-  [Obsolete]
+
   public static void RemoveExams()
   {
     var panel01 = new Panel($"[lightcyan1]Remove Exams[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[silver]▶ Show Exams By Doctor[/]\n");
@@ -395,7 +394,7 @@ public static class DoctorOperations
     {
       node = root.AddNode($"[lightcyan1]{i + 1}.[/] [white]{doctorExams[i].ExamName}[gray] - [/]{doctorExams[i].ExamCode}[/][gray] - [/][lightcyan1]{doctorExams[i].CourseCode}[/][gray] - [/][lightcyan1]{doctorExams[i].NoQuestions}[/]");
     }
-    AnsiConsole.Render(root);
+    AnsiConsole.Write(root);
 
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
     var option = Console.ReadLine();
@@ -454,12 +453,12 @@ public static class DoctorOperations
     Operation.FinishOption();
 
   }
-  [Obsolete]
+
   public static void ViewExams()
   {
     var panel01 = new Panel($"[lightcyan1]View Assigned Courses[/]")
    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[silver]▶ Show Exams By Dr. {sessionDoctor.Name}[/]\n");
@@ -501,12 +500,12 @@ public static class DoctorOperations
     Operation.FinishOption();
   }
 
-  [Obsolete]
+
   public static void ViewStudentsOfSpecificCourse()
   {
     var panel01 = new Panel($"[lightcyan1]View Enrolled Students[/]")
    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[silver]▶ Show Student Enrolled Doctor Courses By Course-Code[/]\n");
@@ -529,7 +528,7 @@ public static class DoctorOperations
       return;
     }
 
-    var enrolledStudents = MainMenu.students.Where(r => r.EnrolledCourses.Contains(courseCode)).ToList();
+    var enrolledStudents = MainMenu.students.Where(r => r.EnrolledCoursesCodes.Contains(courseCode)).ToList();
 
     // Create a table
     var table = new Table();
@@ -553,7 +552,7 @@ public static class DoctorOperations
                            $"[thistle1]{enrolledStudents[i].Code}[/]",
                            $"[lightsteelblue1]{enrolledStudents[i].Email}[/]",
                            $"[lightsteelblue1]{enrolledStudents[i].GPA}[/]",
-                           $"[lightcoral]{string.Join(",", enrolledStudents[i].EnrolledCourses)}[/]"
+                           $"[lightcoral]{string.Join(",", enrolledStudents[i].EnrolledCoursesCodes)}[/]"
                   );
     }
     // Render the table to the console
@@ -563,7 +562,6 @@ public static class DoctorOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
 
   private static Exam GetExam()
   {

@@ -18,19 +18,19 @@ public static class ManagerOperations
 
   public static Manager sessionManager = new();
 
-  [Obsolete]
+
   public static void ViewManagerInfo()
   {
     var panel01 = new Panel($"[gold3]View Manager Info[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
 
     AnsiConsole.Markup("[silver]● The Personal Info of Manager[/]");
 
     Console.WriteLine();
     var panel = new Panel($"[bold]  Manager [gold3]{sessionManager.Name}[/]  [/]")
     .Border(BoxBorder.Rounded);
-    AnsiConsole.Render(panel);
+    AnsiConsole.Write(panel);
 
     sessionManager.PrintUser("gold3");
 
@@ -38,13 +38,13 @@ public static class ManagerOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
+
   public static void EditManagerInfo()
   {
     Console.WriteLine();
     var panel01 = new Panel($"[gold3]Update Personal Info[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine("[silver]▶ Edit Password and Email[/]\n");
@@ -83,14 +83,14 @@ public static class ManagerOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
+
 
   public static void AddUser()
   {
     Console.WriteLine();
     var panel01 = new Panel($"[gold3]Add User[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
@@ -147,12 +147,12 @@ public static class ManagerOperations
     }
 
   }
-  [Obsolete]
+
   public static void EditUserPassword()
   {
     var panel01 = new Panel($"[gold3]Edit User Password[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine("[silver]▶ Edit The Password[/]\n");
@@ -225,12 +225,12 @@ public static class ManagerOperations
       Operation.OutputMessage("Editting Canceled!");
     }
   }
-  [Obsolete]
+
   public static void RemoveUser()
   {
     var panel01 = new Panel($"[gold3]Remove User[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine("[silver]▶ Remove User[/]\n");
@@ -274,10 +274,10 @@ public static class ManagerOperations
         //optimize student.enrolledCourses data
         for (int i = 0; i < MainMenu.doctors[doctorIndex].CoursesTaughtCodes.Count; i++)
         {
-          var enrolledStudents = MainMenu.students.Where(r => r.EnrolledCourses.Contains(MainMenu.doctors[doctorIndex].CoursesTaughtCodes[i])).ToList();
+          var enrolledStudents = MainMenu.students.Where(r => r.EnrolledCoursesCodes.Contains(MainMenu.doctors[doctorIndex].CoursesTaughtCodes[i])).ToList();
           for (int j = 0; j < enrolledStudents.Count; j++)
           {
-            enrolledStudents[j].EnrolledCourses.Remove(MainMenu.doctors[doctorIndex].CoursesTaughtCodes[i]);
+            enrolledStudents[j].EnrolledCoursesCodes.Remove(MainMenu.doctors[doctorIndex].CoursesTaughtCodes[i]);
 
             int studentIndex = Operation.GetUserIndex(enrolledStudents[j].Code, 2);
             MainMenu.students[studentIndex] = enrolledStudents[j];
@@ -320,16 +320,16 @@ public static class ManagerOperations
 
         int studentIndex = Operation.GetUserIndex(codeInput, 2);
 
-        for (int i = 0; i < MainMenu.students[studentIndex].EnrolledCourses.Count; i++)
+        for (int i = 0; i < MainMenu.students[studentIndex].EnrolledCoursesCodes.Count; i++)
         {
-          if (MainMenu.courses.Any(r => r.CourseCode == MainMenu.students[studentIndex].EnrolledCourses[i]))
+          if (MainMenu.courses.Any(r => r.CourseCode == MainMenu.students[studentIndex].EnrolledCoursesCodes[i]))
           {
-            int courseIndex = Operation.GetCourseIndex(MainMenu.students[studentIndex].EnrolledCourses[i]);
+            int courseIndex = Operation.GetCourseIndex(MainMenu.students[studentIndex].EnrolledCoursesCodes[i]);
             MainMenu.courses[courseIndex].NoStudents--;
           }
         }
         MainMenu._courseRepository.SaveCourseData(MainMenu.courses);
-        MainMenu.students[studentIndex].EnrolledCourses.Clear();
+        MainMenu.students[studentIndex].EnrolledCoursesCodes.Clear();
 
         //remove student from students list
         MainMenu.students.Remove(MainMenu.students[userIndex]);
@@ -346,12 +346,12 @@ public static class ManagerOperations
       Operation.OutputMessage("Removal Canceled!");
     }
   }
-  [Obsolete]
+
   public static void ViewUserDetails()
   {
     var panel01 = new Panel($"[gold3]View User Details[/]")
    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine("[silver]▶ View User Details[/]\n");
@@ -414,12 +414,12 @@ public static class ManagerOperations
     Operation.FinishOption();
 
   }
-  [Obsolete]
+
   public static void ViewUsers()
   {
     var panel01 = new Panel($"[gold3]View Users In System[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine("[silver]▶ View Users[/]\n");
@@ -510,12 +510,12 @@ public static class ManagerOperations
     Operation.FinishOption();
   }
 
-  [Obsolete]
+
   public static void AddCourse()
   {
     var panel01 = new Panel($"[gold3]Add Course[/]")
    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine("[silver]▶ Get Course Details[/]\n");
@@ -555,12 +555,12 @@ public static class ManagerOperations
       Operation.OutputMessage($"Something went wrong: {ex.Message}");
     }
   }
-  [Obsolete]
+
   public static void RemoveCourse()
   {
     var panel01 = new Panel($"[gold3]Remove Course[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
       AnsiConsole.MarkupLine("[silver]▶ Remove Course By Code[/]\n");
@@ -590,10 +590,10 @@ public static class ManagerOperations
 
 
       //optimize student enrolledCourses data
-      var enrolledStudents = MainMenu.students.Where(r => r.EnrolledCourses.Contains(course.CourseCode)).ToList();
+      var enrolledStudents = MainMenu.students.Where(r => r.EnrolledCoursesCodes.Contains(course.CourseCode)).ToList();
       for (int j = 0; j < enrolledStudents.Count; j++)
       {
-        enrolledStudents[j].EnrolledCourses.Remove(course.CourseCode);
+        enrolledStudents[j].EnrolledCoursesCodes.Remove(course.CourseCode);
 
         int studentIndex = Operation.GetUserIndex(enrolledStudents[j].Code, 2);
         MainMenu.students[studentIndex] = enrolledStudents[j];
@@ -635,12 +635,12 @@ public static class ManagerOperations
       Operation.OutputMessage("Removal Canceled!");
     }
   }
-  [Obsolete]
+
   public static void ViewCourses()
   {
     var panel01 = new Panel($"[gold3]View Courses[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
 
     AnsiConsole.MarkupLine("[silver]▶ View All Courses of System[/]\n");
 
@@ -682,12 +682,12 @@ public static class ManagerOperations
 
     Operation.FinishOption();
   }
-  [Obsolete]
+
   public static void ViewCourseDetails()
   {
     var panel01 = new Panel($"[gold3] View Course Details[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine("[silver]▶ View Course Details By Code[/]\n");
@@ -725,12 +725,12 @@ public static class ManagerOperations
 
   }
 
-  [Obsolete]
+
   public static void ScheduleExams()
   {
     var panel01 = new Panel($"[gold3]Schedule Exams[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine("[silver]▶ Show And Schedule Exams In The System[/]\n");
@@ -817,12 +817,12 @@ public static class ManagerOperations
     }
   }
 
-  [Obsolete]
+
   public static void SystemReport()
   {
     var panel01 = new Panel($"[gold3]System Report[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Render(panel01);
+    AnsiConsole.Write(panel01);
 
     AnsiConsole.MarkupLine("[silver]▶ Get System Report[/]\n");
 

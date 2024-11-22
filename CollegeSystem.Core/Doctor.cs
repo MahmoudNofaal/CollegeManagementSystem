@@ -46,7 +46,6 @@ public class Doctor : Person
            $"Exams of Doctor: {string.Join(",", DoctorExamsCodes)}\n";
   }
 
-  [Obsolete]
   public override void PrintUser(string color)
   {
     Thread.Sleep(60);

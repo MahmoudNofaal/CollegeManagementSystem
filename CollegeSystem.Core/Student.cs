@@ -14,7 +14,7 @@ public class Student : Person
   public string Grade { get; set; }
   public string Gender { get; set; }
   public string YearOfStudy { get; set; }
-  public List<string> EnrolledCourses { get; set; } = new List<string>();
+  public List<string> EnrolledCoursesCodes { get; set; } = new List<string>();
 
   public Student() : base()
   {
@@ -41,7 +41,7 @@ public class Student : Person
     Gender = gender;
     Grade = grade;
     YearOfStudy = yearOfStudy;
-    EnrolledCourses = enrolledCourses;
+    EnrolledCoursesCodes = enrolledCourses;
   }
 
   public override string ToString()
@@ -51,10 +51,10 @@ public class Student : Person
            $"Grade: {Grade}" +
            $"Gender: {Gender}\n" +
            $"Year Of Study: {YearOfStudy}\n" +
-           $"Courses: {string.Join(",", EnrolledCourses)}";
+           $"Courses: {string.Join(",", EnrolledCoursesCodes)}";
   }
 
-  [Obsolete]
+
   public override void PrintUser(string color)
   {
     Thread.Sleep(60);
@@ -88,7 +88,7 @@ public class Student : Person
     AnsiConsole.Markup($"[bold]├─ Year Of Study:[/] [{color}]{YearOfStudy}[/]\n");
 
     Thread.Sleep(60);
-    AnsiConsole.Markup($"[bold]└─ Enrolled Courses :[/] [{color}]{string.Join(",", EnrolledCourses)}[/]\n");
+    AnsiConsole.Markup($"[bold]└─ Enrolled Courses Codes:[/] [{color}]{string.Join(",", EnrolledCoursesCodes)}[/]\n");
 
   }
 }

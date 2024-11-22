@@ -16,11 +16,6 @@ public class Exam
   public DateTime ExamDate { get; set; }
   public int NoQuestions { get; set; }
 
-  public Exam()
-  {
-
-  }
-
   public Exam(
                string examCode,
                string examName,
@@ -37,12 +32,6 @@ public class Exam
   }
 
 
-  public override string ToString()
-  {
-    return $"{ExamName},";
-  }
-
-  [Obsolete]
   public void PrintExam(string color)
   {
     Thread.Sleep(60);

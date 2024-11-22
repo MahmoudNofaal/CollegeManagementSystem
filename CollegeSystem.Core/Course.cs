@@ -19,10 +19,6 @@ public class Course
   public int NoStudents { get; set; } = 0;
   public int NoOfHours { get; set; } = 1;
 
-  public Course()
-  {
-
-  }
 
   public Course(
                  string courseCode,
@@ -45,16 +41,8 @@ public class Course
     NoOfHours = noOfHours;
   }
 
-  //public override string ToString()
-  //{
-  //  return $"Code: {Code}\n" +
-  //         $"Name: {Name}\n" +
-  //         $"Description: {Description}\n" +
-  //         $"Department: {Department}\n" +
-  //         $"NoStudents: {NoStudents}\n";
-  //}
 
-  [Obsolete]
+
   public void PrintCourse(string color)
   {
     Thread.Sleep(60);

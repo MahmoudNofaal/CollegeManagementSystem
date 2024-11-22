@@ -15,7 +15,7 @@ public abstract class Person
   public string Password { get; set; }
   public string Email { get; set; }
   public string Department { get; set; }
-  public bool Activate { get; set; } = false;
+  public bool IsEmailActivate { get; set; } = false;
 
   // Default constructor for deserialization or use cases where initialization is not needed
   public Person() { }
@@ -29,10 +29,9 @@ public abstract class Person
     Password = password;
     Email = email;
     Department = department;
-    Activate = activate;
+    IsEmailActivate = activate;
   }
 
-  [Obsolete]
   public abstract void PrintUser(string color);
 
   public override string ToString()
