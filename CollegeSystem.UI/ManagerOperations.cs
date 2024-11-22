@@ -38,7 +38,6 @@ public static class ManagerOperations
 
     Operation.FinishOption();
   }
-
   public static void EditManagerInfo()
   {
     Console.WriteLine();
@@ -83,7 +82,6 @@ public static class ManagerOperations
 
     Operation.FinishOption();
   }
-
 
   public static void AddUser()
   {
@@ -147,7 +145,6 @@ public static class ManagerOperations
     }
 
   }
-
   public static void EditUserPassword()
   {
     var panel01 = new Panel($"[gold3]Edit User Password[/]")
@@ -225,7 +222,6 @@ public static class ManagerOperations
       Operation.OutputMessage("Editting Canceled!");
     }
   }
-
   public static void RemoveUser()
   {
     var panel01 = new Panel($"[gold3]Remove User[/]")
@@ -346,7 +342,6 @@ public static class ManagerOperations
       Operation.OutputMessage("Removal Canceled!");
     }
   }
-
   public static void ViewUserDetails()
   {
     var panel01 = new Panel($"[gold3]View User Details[/]")
@@ -414,7 +409,6 @@ public static class ManagerOperations
     Operation.FinishOption();
 
   }
-
   public static void ViewUsers()
   {
     var panel01 = new Panel($"[gold3]View Users In System[/]")
@@ -555,7 +549,6 @@ public static class ManagerOperations
       Operation.OutputMessage($"Something went wrong: {ex.Message}");
     }
   }
-
   public static void RemoveCourse()
   {
     var panel01 = new Panel($"[gold3]Remove Course[/]")
@@ -635,7 +628,6 @@ public static class ManagerOperations
       Operation.OutputMessage("Removal Canceled!");
     }
   }
-
   public static void ViewCourses()
   {
     var panel01 = new Panel($"[gold3]View Courses[/]")
@@ -682,7 +674,6 @@ public static class ManagerOperations
 
     Operation.FinishOption();
   }
-
   public static void ViewCourseDetails()
   {
     var panel01 = new Panel($"[gold3] View Course Details[/]")
@@ -724,7 +715,6 @@ public static class ManagerOperations
     Operation.FinishOption();
 
   }
-
 
   public static void ScheduleExams()
   {
@@ -817,7 +807,6 @@ public static class ManagerOperations
     }
   }
 
-
   public static void SystemReport()
   {
     var panel01 = new Panel($"[gold3]System Report[/]")
@@ -865,7 +854,6 @@ public static class ManagerOperations
 
     Operation.FinishOption();
   }
-
 
   private static string GetUserPassword(int userIndex, string code, int i)
   {
@@ -943,7 +931,7 @@ public static class ManagerOperations
       var rnd = new Random().Next(grades.Length);
       string grade = grades[rnd]; // default
       Thread.Sleep(100);
-      AnsiConsole.Markup($"[bold]● ├Default Grade : [/][gold3_1]{grade}[/]\n");
+      AnsiConsole.Markup($"[bold]● ├─ Default Grade : [/][gold3_1]{grade}[/]\n");
 
       double gpa = 0.0; // default
       switch (grades[rnd])

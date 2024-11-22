@@ -19,7 +19,7 @@ public static class Operation
   {
     Random _random = new Random();
 
-    const string chars = "mnbvcxzlkjhgfdsaqwertyuiop1234567890";
+    const string chars = "qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890";
     return new string(Enumerable.Repeat(chars, 5).Select(s => s[_random.Next(s.Length)]).ToArray());
   }
   public static void LoadingOperation(string str, int turns)

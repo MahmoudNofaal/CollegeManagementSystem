@@ -41,12 +41,11 @@ internal class Program
 
     // this is will be the adminstrator
     List<Manager> managers = new();
-    managers.Add(new Manager("50500001", "M001", "Nofaal", "12345", "nofaal@manager.com", "CS", true));
+    managers.Add(new Manager("50500001", "M0001", "Nofaal", "12345", "nofaal@manager.com", "CS", true));
 
 
     //Manager Info:
-    //  CODE:
-    //M001
+    //  CODE: M001
     //  Password : 12345
 
 

@@ -77,11 +77,11 @@ public class MainMenu
     switch (option)
     {
       case "1":
-        Operation.LoadingOperation("Signing..",30);
+        Operation.LoadingOperation("Signing In..",30);
         SignIn();
         break;
       case "2":
-        Operation.LoadingOperation("Signing..",30);
+        Operation.LoadingOperation("Signing Up..",30);
         SignUp();
         break;
       case "3":

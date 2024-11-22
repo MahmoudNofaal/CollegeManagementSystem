@@ -13,24 +13,24 @@ public static class Generator
   {
     if (students == null || students.Count == 0)
     {
-      return "S001";
+      return "S0001";
     }
 
     var highestCode = students.Max(s => s.Code);
     int numericPart = int.Parse(highestCode.Substring(1));
-    return $"S{(numericPart + 1).ToString("D3")}";
+    return $"S{(numericPart + 1).ToString("D4")}";
   }
 
   public static string GenerateDoctorCode(List<Doctor> doctors)
   {
     if (doctors == null || doctors.Count == 0)
     {
-      return "D001";
+      return "D0001";
     }
 
     var highestCode = doctors.Max(d => d.Code);
     int numericPart = int.Parse(highestCode.Substring(1));
-    return $"D{(numericPart + 1).ToString("D3")}";
+    return $"D{(numericPart + 1).ToString("D4")}";
   }
 
   public static string GenerateStudentNationalId(List<Student> students)
@@ -61,24 +61,24 @@ public static class Generator
   {
     if (courses == null || courses.Count == 0)
     {
-      return "C001";
+      return "C0001";
     }
 
     var highestCode = courses.Max(d => d.CourseCode);
     int numericPart = int.Parse(highestCode.Substring(1));
-    return $"C{(numericPart + 1).ToString("D3")}";
+    return $"C{(numericPart + 1).ToString("D4")}";
   }
 
   public static string GenerateExamCode(List<Exam> exams)
   {
     if (exams == null || exams.Count == 0)
     {
-      return "E001";
+      return "E0001";
     }
 
     var highestCode = exams.Max(d => d.ExamCode);
     int numericPart = int.Parse(highestCode.Substring(1));
-    return $"E{(numericPart + 1).ToString("D3")}";
+    return $"E{(numericPart + 1).ToString("D4")}";
   }
 
 }
