@@ -15,13 +15,28 @@ namespace CollegeSystem.UI;
 #region MyRegion
 public static class Operation
 {
-  public static string GeneratePassword()
+  public static void CalculateGrade(Student s)
   {
-    Random _random = new Random();
-
-    const string chars = "qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890";
-    return new string(Enumerable.Repeat(chars, 5).Select(s => s[_random.Next(s.Length)]).ToArray());
+    if (s.GPA > 3.5 && s.GPA <= 4.0)
+      s.Grade = "A+";
+    else if (s.GPA > 3.0 && s.GPA <= 3.5)
+      s.Grade = "A";
+    else if (s.GPA > 2.5 && s.GPA <= 3.0)
+      s.Grade = "B+";
+    else if (s.GPA > 2.0 && s.GPA <= 2.5)
+      s.Grade = "B";
+    else if (s.GPA > 1.5 && s.GPA <= 2.0)
+      s.Grade = "D+";
+    else if (s.GPA > 1.0 && s.GPA <= 1.5)
+      s.Grade = "D";
+    else if (s.GPA > 0.0 && s.GPA <= 1.0)
+      s.Grade = "F";
   }
+  public static double CalculateGPA(Student s)
+  {
+    return s.Marks / s.NoOfCreditHours * 10;
+  }
+
   public static void LoadingOperation(string str, int turns)
   {
     AnsiConsole.Status().Start($"{str}...", ctx =>
@@ -46,7 +61,7 @@ public static class Operation
   public static string GetValidInputArray(string prompt, string something, string[] arr)
   {
     int i = 0;
-    while (i < 3)
+    while (i < 2)
     {
       AnsiConsole.Markup($"{prompt}[gold3_1]{something}[/]: ");
 
@@ -59,7 +74,7 @@ public static class Operation
       }
       else
       {
-        AnsiConsole.Markup($"[red]Invalid department code.[/] Please enter right data\n");
+        AnsiConsole.Markup($"[red]Invalid Inuput.[/] Please enter right data\n");
       }
       i++;
     }
@@ -70,7 +85,7 @@ public static class Operation
     DateTime date;
     int attempts = 0;
 
-    while (attempts < 3)
+    while (attempts < 2)
     {
       AnsiConsole.Markup($"{prompt}[gold3_1]{something}[/]: ");
 
@@ -84,12 +99,12 @@ public static class Operation
     }
     return default;
   }
-  public static int GetValidIntInput(string prompt, string something,int minValue, int maxValue)
+  public static int GetValidIntInput(string prompt, string something, int minValue, int maxValue)
   {
     int result;
     int attempts = 0;
 
-    while (attempts < 3)
+    while (attempts < 2)
     {
       AnsiConsole.Markup($"{prompt}[gold3_1]{something}[/]: ");
 
@@ -108,7 +123,7 @@ public static class Operation
     string input;
     int attempts = 0;
 
-    while (attempts < 3)
+    while (attempts < 2)
     {
       AnsiConsole.Markup($"{prompt}[gold3_1]{something}[/]: ");
 
@@ -128,7 +143,7 @@ public static class Operation
     string? input;
     int attempts = 0;
 
-    while (attempts < 3)
+    while (attempts < 2)
     {
       AnsiConsole.Markup($"{prompt}[gold3_1]{something}[/]: ");
 
@@ -193,7 +208,7 @@ public static class Operation
   public static string GetExamCodeInSystem(string prompt, string something)
   {
     int i = 0;
-    while (i < 3)
+    while (i < 2)
     {
       AnsiConsole.Markup($"{prompt}[gold3_1]{something}[/]: ");
 
@@ -214,21 +229,17 @@ public static class Operation
     return "Invalid input";
 
   }
-  public static string GetUserCodeInSystem(string prompt, string something, int c)
+  public static string GetUserCodeInSystem(string prompt, string something)
   {
     int i = 0;
-    while (i < 3)
+    while (i < 2)
     {
       AnsiConsole.Markup($"{prompt}[gold3_1]{something}[/]: ");
 
       string? code = Console.ReadLine();
 
       // Check if the entered code is in the system
-      if (c==1 && MainMenu.doctors.Any(u => u.Code == code))
-      {
-        return code;
-      }
-      else if (c==2 && MainMenu.students.Any(u => u.Code == code))
+      if (MainMenu.doctors.Any(u => u.Code == code) || MainMenu.students.Any(u => u.Code == code))
       {
         return code;
       }
@@ -243,7 +254,7 @@ public static class Operation
   public static string GetCourseCodeInSystem(string prompt, string something)
   {
     int i = 0;
-    while (i < 3)
+    while (i < 2)
     {
       AnsiConsole.Markup($"{prompt}[gold3_1]{something}[/]: ");
 
@@ -265,40 +276,31 @@ public static class Operation
   }
   ///////////////////////////////
 
-  public static int GetUserIndex(string code, int c) // 3-manager, 1-doctor, 2-student
+  public static int GetUserIndex(string code) // 3-manager, 1-doctor, 2-student
   {
     int index = 0;
-    if (c == 1)
+    for (int i = 0; i < MainMenu.doctors.Count; i++)
     {
-      for (int i = 0; i < MainMenu.doctors.Count; i++)
+      if (MainMenu.doctors[i].Code == code)
       {
-        if (MainMenu.doctors[i].Code == code)
-        {
-          index = i;
-          return index;
-        }
+        index = i;
+        return index;
       }
     }
-    else if (c == 2)
+    for (int i = 0; i < MainMenu.students.Count; i++)
     {
-      for (int i = 0; i < MainMenu.students.Count; i++)
+      if (MainMenu.students[i].Code == code)
       {
-        if (MainMenu.students[i].Code == code)
-        {
-          index = i;
-          return index;
-        }
+        index = i;
+        return index;
       }
     }
-    else if (c == 3)
+    for (int i = 0; i < MainMenu.managers.Count; i++)
     {
-      for (int i = 0; i < MainMenu.managers.Count; i++)
+      if (MainMenu.managers[i].Code == code)
       {
-        if (MainMenu.managers[i].Code == code)
-        {
-          index = i;
-          return index;
-        }
+        index = i;
+        return index;
       }
     }
 

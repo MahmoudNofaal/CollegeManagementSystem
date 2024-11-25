@@ -1,4 +1,4 @@
-﻿  using Spectre.Console;
+﻿    using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,8 @@ namespace CollegeSystem.Core;
 
 public abstract class Person
 {
-  public string NationalId { get; set; }
   public string Code { get; set; }
-  public string Name { get; set; }
+  public string FullName { get; set; }
   public string Password { get; set; }
   public string Email { get; set; }
   public string Department { get; set; }
@@ -21,11 +20,10 @@ public abstract class Person
   public Person() { }
 
   // Constructor for initialization with parameters
-  public Person(string nationalId, string code,  string name, string password, string email, string department, bool activate)
+  public Person(string code,  string name, string password, string email, string department, bool activate)
   {
-    NationalId = nationalId;
     Code = code;
-    Name = name;
+    FullName = name;
     Password = password;
     Email = email;
     Department = department;
@@ -36,9 +34,8 @@ public abstract class Person
 
   public override string ToString()
   {
-     return $"National ID: {NationalId},\n" +
-            $"Code: {Code},\n" +
-            $"Name: {Name},\n" +
+     return $"Code: {Code},\n" +
+            $"Name: {FullName},\n" +
             $"Password: {Password}\n" +
             $"Email: {Email}\n" +
             $"Department: {Department}\n";

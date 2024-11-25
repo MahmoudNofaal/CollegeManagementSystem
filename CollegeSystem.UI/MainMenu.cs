@@ -22,9 +22,7 @@ public class MainMenu
   public static List<Course> courses = _courseRepository.LoadCourses();
   public static List<Exam> exams = _examRepository.LoadExams();
 
-
   private readonly AuthenticationService _authService;
-
 
   public MainMenu(AuthenticationService authService)
   {
@@ -49,16 +47,12 @@ public class MainMenu
     Console.WriteLine("┣═════════════════════════════════════╝");
 
     Console.WriteLine("┃  ╭────────────╮");
-    AnsiConsole.MarkupLine("┣━━┃ [lightcyan1][italic]1) Sign In[/][/] ┃");
+    AnsiConsole.MarkupLine("┣━━┃ [lightcyan1][italic]1) SIGN IN[/][/] ┃");
     Console.WriteLine("┃  ╰────────────╯");
 
-    Console.WriteLine("┃  ╭────────────╮");
-    AnsiConsole.MarkupLine("┣━━┃ [lightcyan1][italic]2) Sign Up[/][/] ┃");
-    Console.WriteLine("┃  ╰────────────╯");
-
-    Console.WriteLine("┃  ╭────────────────────╮");
-    AnsiConsole.MarkupLine("┗━━┃ [lightcyan1][italic]3) Exit The System[/][/] ┃");
-    Console.WriteLine("   ╰────────────────────╯");
+    Console.WriteLine("┃  ╭─────────────────────────╮");
+    AnsiConsole.MarkupLine("┗━━┃ [lightcyan1][italic]2) Exit From The System[/][/] ┃");
+    Console.WriteLine("   ╰─────────────────────────╯");
 
     Console.WriteLine();
 
@@ -81,10 +75,6 @@ public class MainMenu
         SignIn();
         break;
       case "2":
-        Operation.LoadingOperation("Signing Up..",30);
-        SignUp();
-        break;
-      case "3":
         return;
       default:
         AnsiConsole.MarkupLine("[red]Invalid Option. [/][yellow]Please try again.[/]");
@@ -93,7 +83,6 @@ public class MainMenu
     Operation.FinishOption();
     Display();
   }
-
 
   private void SignIn()
   {
@@ -123,8 +112,6 @@ public class MainMenu
     var code = Operation.GetValidatedStringInput("● Please Enter Your ", "Code");
     if (code == "Invalid input")
     { return; }
-
-
 
     var password = Operation.GetValidatedStringInput("● Please Enter Your ", "Password");
     if (password == "Invalid input")
@@ -162,76 +149,6 @@ public class MainMenu
         AnsiConsole.MarkupLine("[magenta1]Unknown user type.[/]");
         break;
     }
-  }
-
-
-  private void SignUp()
-  {
-    Console.Clear();
-
-    var rule = new Rule("[lightcyan1]Sign Up Page[/]");
-    rule.Justification = Justify.Left;
-    rule.Border = BoxBorder.Double;
-    AnsiConsole.Write(rule);
-
-    var panel = new Panel($"[bold] Welcome to the [lightcyan1]{Manager.CollegeName}[/] Management System  [/]")
-    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Write(panel);
-
-
-    var panel02 = new Panel($"[bold] [lightcyan1]SIGN UP[/]  [/]")
-    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
-    AnsiConsole.Write(panel02);
-
-    Console.WriteLine();
-
-    AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
-    var option = Console.ReadLine();
-    if (option.ToLower() == "q")
-    {
-      return;
-    }
-
-    var role = Operation.GetValidIntInput("> Are you 1.Doctor, 2.Student or 3.Manager? ", "(1,2,3)", 1, 3);
-    if (role == -1)
-    { return; }
-
-    Operation.LoadingOperation("Processing...",50);
-    Console.WriteLine();
-
-    var nationalId = Operation.GetValidatedStringInput("● Enter Your ", "National Id");
-    if (nationalId == "Invalid input")
-    { return; }
-
-    var password = Operation.GeneratePassword();
-
-    Operation.LoadingOperation("Proccessing Registeration...",50);
-
-    bool result = false;
-    if (role == 1)
-    {
-      result = _authService.RegisterDoctor(nationalId, password);
-    }
-    else if (role == 2)
-    {
-      result = _authService.RegisterStudent(nationalId, password);
-    }
-    else if (role == 3)
-    {
-      result = _authService.RegisterDoctor(nationalId, password);
-    }
-
-    //Console.WriteLine(result ? "Registration successful." : "Registration failed.");
-    AnsiConsole.Markup
-      (result ?
-       $"● Generated Password For Sign In: [lightcyan1]{password}[/]\n\n[green]> Activate Account Successfully. [/][grey85]Press <Enter> To Return College System Page.[/]"
-       :
-      $"[red3_1]> Registration failed. Account National-Id or Code is wrong[/][lightcyan1], or aleardy activated![/]");
-    Console.ReadLine();
-
-    Console.WriteLine();
-    Operation.Loading(250);
-
   }
 
 }

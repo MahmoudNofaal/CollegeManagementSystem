@@ -18,22 +18,20 @@ public class UserRepository
   {
     try
     {
-
       // Save Doctors
       using (StreamWriter writer = new StreamWriter(DoctorFilePath))
       {
 
         foreach (var user in users.OfType<Doctor>())
         {
-          writer.WriteLine($"{user.NationalId}|" +
-                           $"{user.Code}|" +
-                           $"{user.Name}|" +
+          writer.WriteLine($"{user.Code}|" +
+                           $"{user.FullName}|" +
                            $"{user.Password}|" +
                            $"{user.Email}|" +
                            $"{user.Department}|" +
                            $"{user.IsEmailActivate}|" +
                            $"{user.DateOfHire}|" +
-                           $"{string.Join(",", user.CoursesTaughtCodes)}|" +
+                           $"{string.Join(",", user.RegisteredCoursesCodes)}|" +
                            $"{string.Join(",", user.DoctorExamsCodes)}"
                           );
         }
@@ -45,29 +43,28 @@ public class UserRepository
       Console.WriteLine($"Error saving data: {ex.Message}");
     }
   }
-
   public void SaveStudentData(List<Student> users)
   {
     try
     {
-
       // Save Students
       using (StreamWriter writer = new StreamWriter(StudentFilePath))
       {
         foreach (var user in users.OfType<Student>())
         {
-          writer.WriteLine(
-                            $"{user.NationalId}|" +
-                            $"{user.Code}|" +
-                            $"{user.Name}|" +
+          writer.WriteLine( $"{user.Code}|" +
+                            $"{user.FullName}|" +
                             $"{user.Password}|" +
                             $"{user.Email}|" +
                             $"{user.Department}|" +
                             $"{user.IsEmailActivate}|" +
                             $"{user.GPA}|" +
+                            $"{user.Marks}|" +
                             $"{user.Grade}|" +
                             $"{user.Gender}|" +
                             $"{user.YearOfStudy}|" +
+                            $"{user.NoOfCreditHours}|" +
+                            $"{user.NumberOfCoursesHours}|"+
                             $"{string.Join(",", user.EnrolledCoursesCodes)}"
                           );
         }
@@ -88,18 +85,18 @@ public class UserRepository
       {
         foreach (var user in users.OfType<Manager>())
         {
-          writer.WriteLine(
-                            $"{user.NationalId}|" +
-                            $"{user.Code}|" +
-                            $"{user.Name}|" +
+          writer.WriteLine( $"{user.Code}|" +
+                            $"{user.FullName}|" +
                             $"{user.Password}|" +
                             $"{user.Email}|" +
                             $"{user.Department}|"+
-                            $"{user.IsEmailActivate}"
+                            $"{user.IsEmailActivate}|"+
+                            $"{Manager.CollegeName}|"+
+                            $"{Manager.NumberOfCoursesHoursAccepted}|"+
+                            $"{string.Join("~", Manager.Notifies)}"
                           );
         }
       }
-
     }
     catch (Exception ex)
     {
@@ -119,10 +116,10 @@ public class UserRepository
         while ((line = reader.ReadLine()) != null)
         {
           var fields = line.Split('|');
-          if (fields.Length >= 10)  // Adjusted for correct length and to account for list parsing
+          if (fields.Length >= 9)  // Adjusted for correct length and to account for list parsing
           {
-            var coursesTaughtCodes = fields[8].Split(',').ToList();
-            var doctorExamsCodes = fields[9].Split(',').ToList();
+            var coursesTaughtCodes = fields[7].Split(',').ToList();
+            var doctorExamsCodes = fields[8].Split(',').ToList();
 
             var doctor = new Doctor(
                                      fields[0],
@@ -130,9 +127,8 @@ public class UserRepository
                                      fields[2],
                                      fields[3],
                                      fields[4],
-                                     fields[5],
-                                     bool.Parse(fields[6]),
-                                     DateTime.Parse(fields[7]),
+                                     bool.Parse(fields[5]),
+                                     DateTime.Parse(fields[6]),
                                      coursesTaughtCodes,
                                      doctorExamsCodes
                                     );
@@ -143,7 +139,6 @@ public class UserRepository
     }
     return users;
   }
-
   public List<Student> LoadStudents()
   {
     List<Student> users = new List<Student>();
@@ -156,10 +151,9 @@ public class UserRepository
         while ((line = reader.ReadLine()) != null)
         {
           var fields = line.Split('|');
-          if (fields.Length >= 12)  // Adjusted for correct length and to account for list parsing
+          if (fields.Length >= 14)  // Adjusted for correct length and to account for list parsing
           {
-            var enrolledCourses = fields[11].Split(',').ToList();
-
+            var enrolledCourses = fields[13].Split(',').ToList();
 
             var student = new Student(
                                        fields[0],
@@ -167,12 +161,14 @@ public class UserRepository
                                        fields[2],
                                        fields[3],
                                        fields[4],
-                                       fields[5],
-                                       bool.Parse(fields[6]),
+                                       bool.Parse(fields[5]),
+                                       double.Parse(fields[6]),
                                        double.Parse(fields[7]),
                                        fields[8],
                                        fields[9],
                                        fields[10],
+                                       int.Parse(fields[11]),
+                                       int.Parse(fields[12]),
                                        enrolledCourses
                                       );
             users.Add(student);
@@ -183,7 +179,6 @@ public class UserRepository
     return users;
 
   }
-
   public List<Manager> LoadManagers()
   {
     List<Manager> users = new List<Manager>();
@@ -196,23 +191,25 @@ public class UserRepository
         while ((line = reader.ReadLine()) != null)
         {
           var fields = line.Split('|');
-          if (fields.Length == 7)
+          if (fields.Length >= 9)
           {
+            var notifies = fields[8].Split('~').ToList();
             var manager = new Manager(
                                        fields[0],
                                        fields[1],
                                        fields[2],
                                        fields[3],
                                        fields[4],
-                                       fields[5],
-                                       bool.Parse(fields[6])
+                                       bool.Parse(fields[5]),
+                                       fields[6],
+                                       int.Parse(fields[7]),
+                                       notifies
                                      );
             users.Add(manager);
           }
         }
       }
     }
-
     return users;
   }
 }

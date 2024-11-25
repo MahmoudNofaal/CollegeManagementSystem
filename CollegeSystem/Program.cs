@@ -2,9 +2,6 @@
 using CollegeSystem.Core;
 using CollegeSystem.Data;
 using CollegeSystem.UI;
-using Spectre.Console;
-using System.Collections.Generic;
-using System.Data.Common;
 using System.Text;
 
 namespace CollegeSystem;
@@ -18,13 +15,14 @@ internal class Program
 
     #region Rung Manager System
 
-    //ManagerPage managerPage = new ManagerPage(new Manager("50500001", "M001", "Nofaal", "12345", "nofaal@manager.com", "CS", true));
+    //ManagerPage managerPage = new ManagerPage(new Manager("M001", "Nofaal", "12345", "nofaal@manager.com", "CS", true, "FCAI", new List<string>()));
+
     #endregion
 
     #region Run Doctor System
 
     //Session sessionEntity = new();
-    //sessionEntity.CurrentUser = MainMenu.doctors[7];
+    //sessionEntity.CurrentUser = MainMenu.doctors[0];
     //DoctorPage doctorPage = new((Doctor)sessionEntity.CurrentUser);
 
     #endregion
@@ -32,7 +30,7 @@ internal class Program
     #region Run Student System
 
     //Session sessionEntity = new();
-    //sessionEntity.CurrentUser = MainMenu.students[24];
+    //sessionEntity.CurrentUser = MainMenu.students[0];
     //StudentPage studentPage = new((Student)sessionEntity.CurrentUser);
 
     #endregion
@@ -41,13 +39,11 @@ internal class Program
 
     // this is will be the adminstrator
     List<Manager> managers = new();
-    managers.Add(new Manager("50500001", "M0001", "Nofaal", "12345", "nofaal@manager.com", "CS", true));
-
+    managers.Add(new Manager("M0001", "Mahmoud Nofaal", "12345", "mahmoudNof0001@gmail.com", "NULL", true, "FACI", 18, new List<string>()));
 
     //Manager Info:
     //  CODE: M001
     //  Password : 12345
-
 
     UserRepository _userRepository = new UserRepository();
 

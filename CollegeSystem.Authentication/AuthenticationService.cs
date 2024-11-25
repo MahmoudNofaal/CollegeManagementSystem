@@ -45,48 +45,4 @@ public class AuthenticationService
     return null;
   }
 
-  public bool RegisterManager(string nationalId, string password)
-  {
-    var managers = _userRepository.LoadManagers();
-    var manager = managers.FirstOrDefault(d => d.NationalId == nationalId);
-
-    if (manager != null && !manager.IsEmailActivate)
-    {
-      manager.IsEmailActivate = true;
-      manager.Password = password;
-      _userRepository.SaveManagerData(managers);
-      return true;
-    }
-    return false;
-  }
-  public bool RegisterDoctor(string nationalId, string password)
-  {
-    var doctors = _userRepository.LoadDoctors();
-    var doctor = doctors.FirstOrDefault(d => (d.NationalId == nationalId));
-
-    if (doctor != null && !doctor.IsEmailActivate)
-    {
-      doctor.IsEmailActivate = true;
-      AnsiConsole.MarkupLine($"● Doctor Code for Sign In: [lightcyan1]{doctor.Code}[/]");
-      doctor.Password = password;
-      _userRepository.SaveDoctorData(doctors);
-      return true;
-    }
-    return false;
-  }
-  public bool RegisterStudent(string nationalId, string password)
-  {
-    var students = _userRepository.LoadStudents();
-    var student = students.FirstOrDefault(s => s.NationalId == nationalId);
-
-    if (student != null && !student.IsEmailActivate)
-    {
-      student.IsEmailActivate = true;
-      AnsiConsole.MarkupLine($"● Student Code for Sign In: [lightcyan1]{student.Code}[/]");
-      student.Password = password;
-      _userRepository.SaveStudentData(students);
-      return true;
-    }
-    return false;
-  }
 }

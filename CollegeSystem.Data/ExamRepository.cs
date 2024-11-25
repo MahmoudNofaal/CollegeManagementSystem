@@ -25,6 +25,7 @@ public class ExamRepository
                             $"{exam.ExamCode}|" +
                             $"{exam.ExamName}|" +
                             $"{exam.CourseCode}|" +
+                            $"{exam.DoctorCode}|" +
                             $"{exam.ExamDate}|" +
                             $"{exam.NoQuestions}"
                           );
@@ -51,14 +52,15 @@ public class ExamRepository
         while ((line = reader.ReadLine()) != null)
         {
           var fields = line.Split('|');
-          if (fields.Length >= 5)  // Adjusted for correct length and to account for list parsing
+          if (fields.Length >= 6)  // Adjusted for correct length and to account for list parsing
           {
             var exam = new Exam(
                                      fields[0],
                                      fields[1],
                                      fields[2],
-                                     DateTime.Parse(fields[3]),
-                                     int.Parse(fields[4])
+                                     fields[3],
+                                     DateTime.Parse(fields[4]),
+                                     int.Parse(fields[5])
                                     );
             exams.Add(exam);
           }

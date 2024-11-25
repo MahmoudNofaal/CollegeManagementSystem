@@ -10,42 +10,49 @@ namespace CollegeSystem.Core;
 
 public class Manager : Person
 {
-  public const string CollegeName = "FCAI";
+  public static string CollegeName = "FCAI";
+  public static List<string> Notifies = new List<string>();
+  public static int NumberOfCoursesHoursAccepted = 18;
   public Manager()
   {
 
   }
   // departments, noStudents, noDoctors, courses, exams
   public Manager(
-                  string nationalId,
                   string code,
                   string name,
                   string password,
                   string email,
                   string department,
-                  bool activate
+                  bool activate,
+                  string collegeName,
+                  int numberOfCoursesHours,
+                  List<string> notifies
                 )
-    : base(nationalId, code, name, password,  email, department, activate)
+    : base(code, name, password,  email, department, activate)
   {
+    CollegeName = collegeName;
+    NumberOfCoursesHoursAccepted = numberOfCoursesHours;
+    Notifies = notifies;
   }
 
 
   public override void PrintUser(string color)
   {
     Thread.Sleep(40);
-    AnsiConsole.Markup($"[bold]├─ National Id:[/] [{color}]{NationalId}[/]\n");
+    AnsiConsole.Markup($"[bold]├─ College :[/] [{color}]{CollegeName}[/]\n");
+    
+    Thread.Sleep(40);
+    AnsiConsole.Markup($"[bold]├─ Full Name:[/] [{color}]{FullName}[/]\n");
+    
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Code:[/] [{color}]{Code}[/]\n");
-    Thread.Sleep(40);
-    AnsiConsole.Markup($"[bold]├─ Name:[/] [{color}]{Name}[/]\n");
+
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Password:[/] [{color}]{Password}[/]\n");
+
     Thread.Sleep(40);
-    AnsiConsole.Markup($"[bold]├─ Email:[/] [{color}]{Email}[/]\n");
-    Thread.Sleep(60);
-    AnsiConsole.Markup($"[bold]├─ Department:[/] [{color}]{Department}[/]\n");
-    Thread.Sleep(40);
-    AnsiConsole.Markup($"[bold]└─ College Name:[/] [{color}]{CollegeName}[/]\n");
+    AnsiConsole.Markup($"[bold]└─ Email:[/] [{color}]{Email}[/]\n");
 
   }
 }

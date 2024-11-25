@@ -9,6 +9,15 @@ namespace CollegeSystem.UI;
 
 public static class Generator
 {
+  public static string GenerateEmail(string name, string code)
+  {
+    string[] nameParts = name.Split(' ');
+    string firstName = nameParts[0].ToLower();
+    string lastNamePart = nameParts[1].Substring(0, 3).ToLower();
+    string numericCode = code.Substring(1);
+    return $"{firstName}{char.ToUpper(lastNamePart[0]) + lastNamePart.Substring(1)}{numericCode}@gmail.com";
+  }
+
   public static string GenerateStudentCode(List<Student> students)
   {
     if (students == null || students.Count == 0)
@@ -31,30 +40,6 @@ public static class Generator
     var highestCode = doctors.Max(d => d.Code);
     int numericPart = int.Parse(highestCode.Substring(1));
     return $"D{(numericPart + 1).ToString("D4")}";
-  }
-
-  public static string GenerateStudentNationalId(List<Student> students)
-  {
-    if (students == null || students.Count == 0)
-    {
-      return "20200001";
-    }
-
-    var highestId = students.Max(s => s.NationalId);
-    int numericPart = int.Parse(highestId.Substring(3));
-    return $"202{(numericPart + 1).ToString("D5")}";
-  }
-
-  public static string GenerateDoctorNationalId(List<Doctor> doctors)
-  {
-    if (doctors == null || doctors.Count == 0)
-    {
-      return "30300001";
-    }
-
-    var highestId = doctors.Max(d => d.NationalId);
-    int numericPart = int.Parse(highestId.Substring(3));
-    return $"303{(numericPart + 1).ToString("D5")}";
   }
 
   public static string GenerateCourseCode(List<Course> courses)

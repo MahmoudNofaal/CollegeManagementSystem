@@ -12,7 +12,6 @@ public class DoctorPage
 {
   public static Doctor _sessionDoctor = new Doctor();
 
-
   public DoctorPage(Doctor sessionDoctor)
   {
     DoctorOperations.sessionDoctor = sessionDoctor;
@@ -20,7 +19,6 @@ public class DoctorPage
 
     PrintMainMenuOptions();
   }
-
 
   private void PrintMainMenuOptions()
   {
@@ -35,15 +33,14 @@ public class DoctorPage
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
     AnsiConsole.Write(panel);
 
-    AnsiConsole.Markup($"[bold]● Welcome Doctor: [lightcyan1]{_sessionDoctor.Name}[/] To College System\n\n[/]");
-
+    AnsiConsole.Markup($"[bold]● Welcome Doctor: [lightcyan1]{_sessionDoctor.FullName}[/] To College System\n\n[/]");
 
     string[] mainMenuOptions =
     {
-      "Personal Info",
-      "Manage Courses",
-      "Manage Exams",
-      "View Students Of Specific Course",
+      "Profile Page",
+      "Courses Management",
+      "Exams Management",
+      "Students Management",
       "Exist Doctor System"
     };
 
@@ -53,27 +50,23 @@ public class DoctorPage
 
     var selection = AnsiConsole.Prompt(
   new SelectionPrompt<string>()
-  .Title("[gold3_1]▶ [/]Please select an option:")
+  .Title("[gold3_1]▶ [/]Please Select An Option:")
   .PageSize(10)
   .AddChoices(mainMenuOptions));
 
     switch (selection)
     {
-      case "Personal Info":
-        ViewPersonalInfo();
+      case "Profile Page":
+        ProfilePage();
         break;
-      case "Manage Courses":
-        ManageCourses();
+      case "Courses Management":
+        CoursesManagement();
         break;
-      case "Manage Exams":
-        ManageExams();
+      case "Exams Management":
+        ExamsManagement();
         break;
-      case "View Students Of Specific Course":
-        Operation.StartOption("Processing..");
-        var rule02 = new Rule($"[lightcyan1]Doctors {Manager.CollegeName} System[/]");
-        rule02.Justification = Justify.Left;
-        AnsiConsole.Write(rule02);
-        DoctorOperations.ViewStudentsOfSpecificCourse();
+      case "Students Management":
+        StudentsManagement();
         break;
       case "Exist Doctor System":
         return;
@@ -83,7 +76,7 @@ public class DoctorPage
 
   }
 
-  private void ViewPersonalInfo()
+  private void ProfilePage()
   {
     Console.Clear();
 
@@ -91,14 +84,15 @@ public class DoctorPage
     rule.Justification = Justify.Left;
     AnsiConsole.Write(rule);
 
-    var panel = new Panel($"[lightcyan1]View Personal Info[/]")
+    var panel = new Panel($"[lightcyan1]View Profile[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
     AnsiConsole.Write(panel);
 
     string[] userMenuOptions =
     {
-      "View Personal Info",
+      "Profile Info",
       "Update Personal Info",
+      "Notify Section",
       "Exit To Main Menu"
     };
 
@@ -108,7 +102,7 @@ public class DoctorPage
 
     var selection = AnsiConsole.Prompt(
   new SelectionPrompt<string>()
-  .Title("[gold3_1]▶ [/]Please select an option:")
+  .Title("[gold3_1]▶ [/]Please Select An Option:")
   .PageSize(10)
   .AddChoices(userMenuOptions));
 
@@ -118,21 +112,23 @@ public class DoctorPage
     AnsiConsole.Write(rule02);
     switch (selection)
     {
-      case "View Personal Info":
-        DoctorOperations.ViewPersonalProfile();
+      case "Profile Info":
+        DoctorOperations.ProfileInfo();
         break;
       case "Update Personal Info":
         DoctorOperations.UpdatePersonalProfile();
+        break;
+      case "Notify Section":
+        DoctorOperations.NotifySection();
         break;
       case "Exit To Main Menu":
         return;
     }
 
-    ViewPersonalInfo();
+    ProfilePage();
   }
 
-
-  private void ManageCourses()
+  private void CoursesManagement()
   {
     Console.Clear();
 
@@ -146,8 +142,8 @@ public class DoctorPage
 
     string[] userMenuOptions =
     {
-      "Assign Courses",
-      "UnAssign Courses",
+      "Assign Course",
+      "Unassign Course",
       "View Assigned Courses",
       "Exist To Main Menu"
     };
@@ -159,7 +155,7 @@ public class DoctorPage
 
     var selection = AnsiConsole.Prompt(
   new SelectionPrompt<string>()
-  .Title("[gold3_1]▶ [/]Please select an option:")
+  .Title("[gold3_1]▶ [/]Please Select An Option:")
   .PageSize(10)
   .AddChoices(userMenuOptions));
 
@@ -169,11 +165,11 @@ public class DoctorPage
     AnsiConsole.Write(rule02);
     switch (selection)
     {
-      case "Assign Courses":
-        DoctorOperations.AssignCourses();
+      case "Assign Course":
+        DoctorOperations.AssignCourse();
         break;
-      case "UnAssign Courses":
-        DoctorOperations.UnAssignCourses();
+      case "Unassign Course":
+        DoctorOperations.UnassignCourse();
         break;
       case "View Assigned Courses":
         DoctorOperations.ViewAssignedCourses();
@@ -182,11 +178,10 @@ public class DoctorPage
         return;
     }
 
-    ManageCourses();
+    CoursesManagement();
   }
 
-
-  private void ManageExams()
+  private void ExamsManagement()
   {
     Console.Clear();
 
@@ -194,14 +189,14 @@ public class DoctorPage
     rule.Justification = Justify.Left;
     AnsiConsole.Write(rule);
 
-    var panel = new Panel($"[lightcyan1]View Personal Info[/]")
+    var panel = new Panel($"[lightcyan1]Exam Management[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
     AnsiConsole.Write(panel);
 
     string[] userMenuOptions =
     {
-      "Add Exams",
-      "Remove Exams",
+      "Create New Exam",
+      "Remove Exam",
       "View Exams",
       "Exist To Main Menu"
     };
@@ -212,7 +207,7 @@ public class DoctorPage
 
     var selection = AnsiConsole.Prompt(
   new SelectionPrompt<string>()
-  .Title("[gold3_1]▶ [/]Please select an option:")
+  .Title("[gold3_1]▶ [/]Please Select An Option:")
   .PageSize(10)
   .AddChoices(userMenuOptions));
 
@@ -222,11 +217,11 @@ public class DoctorPage
     AnsiConsole.Write(rule02);
     switch (selection)
     {
-      case "Add Exams":
-        DoctorOperations.AddExams();
+      case "Create New Exam":
+        DoctorOperations.CreateNewExam();
         break;
-      case "Remove Exams":
-        DoctorOperations.RemoveExams();
+      case "Remove Exam":
+        DoctorOperations.RemoveExam();
         break;
       case "View Exams":
         DoctorOperations.ViewExams();
@@ -235,7 +230,56 @@ public class DoctorPage
         return;
     }
 
-    ManageExams();
+    ExamsManagement();
   }
+
+  private void StudentsManagement()
+  {
+    Console.Clear();
+
+    var rule = new Rule($"[lightcyan1]Doctors {Manager.CollegeName} System[/]");
+    rule.Justification = Justify.Left;
+    AnsiConsole.Write(rule);
+
+    var panel = new Panel($"[lightcyan1]Students Management[/]")
+    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
+    AnsiConsole.Write(panel);
+
+    string[] userMenuOptions =
+    {
+      "Show Students Of Specific Course",
+      "Give Students Grade",
+      "Exist To Main Menu"
+    };
+
+    Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+    AnsiConsole.MarkupLine("┃  [lightcyan1][italic]Manage Students Menu Option[/][/]  ┃");
+    Console.WriteLine("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
+    var selection = AnsiConsole.Prompt(
+  new SelectionPrompt<string>()
+  .Title("[gold3_1]▶ [/]Please Select An Option:")
+  .PageSize(10)
+  .AddChoices(userMenuOptions));
+
+    Operation.StartOption("Processing..");
+    var rule02 = new Rule($"[lightcyan1]Doctors {Manager.CollegeName} System[/]");
+    rule02.Justification = Justify.Left;
+    AnsiConsole.Write(rule02);
+    switch (selection)
+    {
+      case "Show Students Of Specific Course":
+        DoctorOperations.ShowStudentsOfSpecificCourse();
+        break;
+      case "Give Students Grade":
+        DoctorOperations.GiveStudentsMarks();
+        break;
+      case "Exist To Main Menu":
+        return;
+    }
+
+    StudentsManagement();
+  }
+
 
 }

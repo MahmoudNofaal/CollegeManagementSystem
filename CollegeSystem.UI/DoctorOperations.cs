@@ -17,16 +17,16 @@ public static class DoctorOperations
 
   public static Doctor sessionDoctor = new();
 
-  public static void ViewPersonalProfile()
+  public static void ProfileInfo()
   {
-    var panel01 = new Panel($"[lightcyan1]View Personal Info[/]")
+    var panel01 = new Panel($"[lightcyan1]Profile Info[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
     AnsiConsole.Write(panel01);
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[silver]▶ View Personal Details[/]\n");
 
-    var panel = new Panel($"[bold]  Doctor [lightcyan1]{sessionDoctor.Name}[/]  [/]")
+    var panel = new Panel($"[bold]  Doctor [lightcyan1]{sessionDoctor.FullName}[/]  [/]")
     .Border(BoxBorder.Rounded);
     AnsiConsole.Write(panel);
 
@@ -37,7 +37,6 @@ public static class DoctorOperations
 
     Operation.FinishOption();
   }
-
   public static void UpdatePersonalProfile()
   {
     var panel01 = new Panel($"[lightcyan1]Update Personal Info[/]")
@@ -45,61 +44,207 @@ public static class DoctorOperations
     AnsiConsole.Write(panel01);
     Console.WriteLine();
 
-    AnsiConsole.MarkupLine($"[silver]▶ Edit Password and Email[/]\n");
-
-    AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
-    var option = Console.ReadLine();
-    if (option.ToLower() == "q")
-    {
-      return;
-    }
-
-    string password = Operation.GetValidatedStringInput("● Set a new ", "password");
-    string email = Operation.GetValidEmail("● Enter new ", "email");
-    string str = "Invalid input";
-    if (password == str || email == str)
-    {
-      Operation.OutputMessage("Invalid input");
-      return;
-    }
-
-    Operation.LoadingOperation("▶ Updating Personal Profile...", 50);
-
-    sessionDoctor.Password = password;
-    sessionDoctor.Email = email;
-
-    int sessionDoctorIndex = Operation.GetUserIndex(sessionDoctor.Code, 1);
-
-    //save doctor to doctors list
-    MainMenu.doctors[sessionDoctorIndex] = sessionDoctor;
-    MainMenu._userRepository.SaveDoctorData(MainMenu.doctors);
-
+    var root = new Tree($"[bold]▼ What Do You Want To Edit?[/]");
+    var node = root.AddNode($"[white]───────────────────────╯[/]");
+    node = root.AddNode($"[white]1) Password[/]");
+    node = root.AddNode($"[white]2) Email[/]");
+    node = root.AddNode($"[white]3) Department[/]");
+    AnsiConsole.Write(root);
     Console.WriteLine();
-    AnsiConsole.Markup($"▶ Profile [green]Updated Successfully[/]\n");
 
-    Operation.FinishOption();
+    AnsiConsole.Markup("● Choose a [green]Number[/] Or Tap [red]'q'[/] To Quit: ");
+    var option = Console.ReadLine();
+    Console.WriteLine();
+
+    if (int.TryParse(option, out int number) && (number == 1 || number == 2 || number == 3))
+    {
+      if (number == 1)
+      {
+        Operation.LoadingOperation("▶ Editting User Password...", 70);
+        Console.WriteLine($"● User Password: {sessionDoctor.Password}");
+        string password = Operation.GetValidatedStringInput("●─> Set New ", "Password");
+        if (password == "Invalid input")
+        {
+          AnsiConsole.MarkupLine("▶ [red]Password Is Wrong Format[/]");
+          Console.WriteLine();
+          return;
+        }
+
+        sessionDoctor.Password = password;
+      }
+      else if (number == 2)
+      {
+        Operation.LoadingOperation("▶ Editting User Email...", 70);
+        Console.WriteLine($"● User Email: {sessionDoctor.Email}");
+        string email = Operation.GetValidatedStringInput("●─> Set New ", "Email");
+
+        if (email == "Invalid input")
+        {
+          AnsiConsole.MarkupLine("▶ [red]Email is wrong format[/]");
+          Console.WriteLine();
+          return;
+        }
+
+        sessionDoctor.Email = email;
+      }
+      else if (number == 3)
+      {
+        Operation.LoadingOperation("▶ Editting User Department...", 70);
+        Console.WriteLine($"● User Department: {sessionDoctor.Department}");
+        string department = Operation.GetValidatedStringInput("●─> Set New ", "Department");
+
+        if (department == "Invalid input")
+        {
+          AnsiConsole.MarkupLine("▶ [red]Department is wrong format[/]");
+          Console.WriteLine();
+          return;
+        }
+
+        sessionDoctor.Department = department;
+      }
+
+      int sessionDoctorIndex = Operation.GetUserIndex(sessionDoctor.Code);
+      //save data
+      MainMenu.doctors[sessionDoctorIndex] = sessionDoctor;
+      MainMenu._userRepository.SaveDoctorData(MainMenu.doctors);
+
+      Console.WriteLine();
+      AnsiConsole.Markup($"▶ Profile [green]Updated Successfully[/]\n");
+      Operation.FinishOption();
+    } //endOf if(tryParse)
+    else if (option.ToLower() == "q")
+    {
+      return;
+    }
+    else
+    {
+      Console.WriteLine("Wrong Input!!");
+      Console.ReadLine();
+      Console.Clear();
+      UpdatePersonalProfile();
+    }
+  }
+  public static void NotifySection()
+  {
+    var panel01 = new Panel($"[gold3]Notify Section[/]")
+    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
+    AnsiConsole.Write(panel01);
+
+    var root = new Tree($"[bold]▼ What Action Do You Want?[/]");
+    var node = root.AddNode($"[white]───────────────────────╯[/]");
+    node = root.AddNode($"[white]1) Make New Notify[/]");
+    node = root.AddNode($"[white]2) Show Notifies[/]");
+    AnsiConsole.Write(root);
+    Console.WriteLine();
+
+    AnsiConsole.Markup("● Choose a [green]Number[/] Or Tap [red]'q'[/] To Quit: ");
+    var option = Console.ReadLine();
+    Console.WriteLine();
+
+    if (int.TryParse(option, out int number) && (number == 1 || number == 2))
+    {
+      Operation.LoadingOperation("▶ Loading Action...", 50);
+
+      if (number == 1)
+      {
+        string notify = Operation.GetValidatedStringInput("●─> Create New ", "Notify");
+        if (notify == "Invalid input")
+        {
+          AnsiConsole.MarkupLine("▶ [red]Notify Is In Wrong Format[/]");
+          Console.WriteLine();
+          return;
+        }
+
+        string result = $"[blue](Doctor){sessionDoctor.FullName} - {sessionDoctor.Code}[/]: {notify}. [grey]Created At[/] [red]{DateTime.Now}[/]";
+        Manager.Notifies.Add(result);
+      }
+      else if (number == 2)
+      {
+        // Create a table
+        var table = new Table();
+        // Add columns with different alignments and styles
+        table.AddColumn("[gold3]#[/]");
+        table.AddColumn("[gold3]Notify Content[/]");
+
+        Console.WriteLine();
+        for (int i = 0; i < Manager.Notifies.Count; i++)
+        {
+          table.AddRow($"{i + 1}",
+                              $"[bold]{Manager.Notifies[i]}[/]"
+                      );
+        }
+
+        // Set table border and title
+        table.Border(TableBorder.Rounded);
+        table.Title($"[bold]▼ Notifies By Doctor[/]");
+        // Render the table to the console
+        AnsiConsole.Write(table);
+      }
+
+      int sessionManagerIndex = Operation.GetUserIndex(sessionDoctor.Code);
+      //save data
+      MainMenu.managers[0] = MainMenu.managers[0];
+      MainMenu._userRepository.SaveManagerData(MainMenu.managers);
+
+      Console.WriteLine();
+      AnsiConsole.Markup($"▶ Profile [green]Updated Successfully[/]\n");
+      Operation.FinishOption();
+    } //endOf if(tryParse)
+    else if (option.ToLower() == "q")
+    {
+      return;
+    }
+    else
+    {
+      Console.WriteLine("Wrong Input!!");
+      Console.ReadLine();
+      Console.Clear();
+      NotifySection();
+    }
   }
 
 
-  public static void AssignCourses()
+  public static void AssignCourse()
   {
-    var panel01 = new Panel($"[lightcyan1]Assign Courses[/]")
+    var panel01 = new Panel($"[lightcyan1]Assign Course Page[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
     AnsiConsole.Write(panel01);
     Console.WriteLine();
 
-    AnsiConsole.MarkupLine($"[silver]▶ View UnAssigned Courses In The System[/]\n");
+    AnsiConsole.MarkupLine($"[silver]▶ View Courses In The System Of The College[/]\n");
 
-    List<Course> unassignedCourses = MainMenu.courses.Where(r => r.DoctorCode == "D000").ToList();
+    List<Course> systemCourses = MainMenu.courses.Where(r => r.DoctorCode == "D0000").ToList();
 
-    var root = new Tree($"▼ [lightcyan1]Unassigned Courses In The System[/]");
-    var node = root.AddNode($"[white]──────────────────────────────╯[/]");
-    node = root.AddNode($"[lightcyan1]i. Course Name[/][gray] - [/][lightcyan1]Course Code[/][gray] - [/][lightcyan1]Exam Code[/][gray] - [/][lightcyan1]Number of Hours[/]");
-    for (int i = 0; i < unassignedCourses.Count; i++)
+    /////////////////////////////////
+
+    // Create a new table
+    var table = new Table()
+        .AddColumn("[yellow]#[/]")       // Column for numbering
+        .AddColumn("[lightcyan1]Course Name[/]")  // Column for Course Name
+        .AddColumn("[lightcyan1]Course Code[/]")  // Column for Course Code
+        .AddColumn("[lightcyan1]Department[/]")  // Column for Course Code
+        .AddColumn("[lightcyan1]Number of Hours[/]"); // Column for Number of Hours
+
+    // Add rows for each unassigned course
+    for (int i = 0; i < systemCourses.Count; i++)
     {
-      node = root.AddNode($"[lightcyan1]{i + 1}.[/] [white]{unassignedCourses[i].CourseName}[gray] - [/]{unassignedCourses[i].CourseCode}[/][gray] - [/][lightcyan1]{unassignedCourses[i].ExamCode}[/][gray] - [/][lightcyan1]{unassignedCourses[i].NoOfHours}[/]");
+      table.AddRow(
+          $"[yellow]{i + 1}[/]",                             // Row number
+          $"[cyan1]{systemCourses[i].CourseName}[/]",   // Course Name
+          $"[gold3]{systemCourses[i].CourseCode}[/]",    // Course Code
+          $"[lightcyan1]{systemCourses[i].Department}[/]",// Exam Code
+          $"[lightcyan1]{systemCourses[i].NoOfHours}[/]"// Number of Hours
+      );
     }
-    AnsiConsole.Write(root);
+
+    // Customize table appearance
+    table.Border = TableBorder.Rounded;
+    table.Title = new TableTitle("[lightcyan1]Courses In The System[/]");
+
+    // Render the table
+    AnsiConsole.Write(table);
+
+    ////////////////////////////////
 
     Console.WriteLine();
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
@@ -110,16 +255,16 @@ public static class DoctorOperations
     }
 
     Console.WriteLine();
-    AnsiConsole.Markup($"● [lightcyan1]Choose courses you want to assign: [/]\n");
-    Console.WriteLine();
+    AnsiConsole.Markup($"● [lightcyan1]Choose Course You Want To Assign: [/]\n");
+
     bool isAgree = true;
     while (isAgree)
     {
       Console.WriteLine();
-      string courseCode = Operation.GetCourseCodeInSystem("● Enter system course ", "code");
-      if (courseCode == "Invalid input" || !unassignedCourses.Any(r => r.CourseCode == courseCode))
+      string courseCode = Operation.GetCourseCodeInSystem("● Enter System Course ", "Code");
+      if (courseCode == "Invalid input" || !systemCourses.Any(r => r.CourseCode == courseCode))
       {
-        Operation.OutputMessage("InValid Code");
+        Operation.OutputMessage("Invalid Code");
         return;
       }
 
@@ -127,14 +272,13 @@ public static class DoctorOperations
 
       int courseIndex = Operation.GetCourseIndex(courseCode);
 
-      bool isCourseAssignedBefore = (MainMenu.courses[courseIndex].DoctorCode != "D000"); // true
+      bool isCourseAssignedBefore = (MainMenu.courses[courseIndex].DoctorCode != "D0000"); // true
       //check if the course is assigned already in doctor courses
       if (isCourseAssignedBefore)
       {
-        AnsiConsole.Markup($"[lightcoral]Course is already assigned before![/]\n");
-        Console.WriteLine();
+        AnsiConsole.Markup($"[lightcoral]Course Is Already Assigned Before![/]\n");
 
-        string answer02 = Operation.GetValidatedStringInput("● Do you want to add another course ", "(y/n)");
+        string answer02 = Operation.GetValidatedStringInput("● Do You Want To Add Another Course ", "(y/n)");
         if (answer02 == "Invalid input")
         {
           Operation.OutputMessage("Invalid input");
@@ -148,9 +292,9 @@ public static class DoctorOperations
         }
       }
 
-      int sessionDoctorIndex = Operation.GetUserIndex(sessionDoctor.Code, 1);
+      int sessionDoctorIndex = Operation.GetUserIndex(sessionDoctor.Code);
       //save doctor to doctors list
-      sessionDoctor.CoursesTaughtCodes.Add(courseCode);
+      sessionDoctor.RegisteredCoursesCodes.Add(courseCode);
       MainMenu.doctors[sessionDoctorIndex] = sessionDoctor;
       MainMenu._userRepository.SaveDoctorData(MainMenu.doctors);
 
@@ -161,10 +305,10 @@ public static class DoctorOperations
       Operation.LoadingOperation("Successfully Assigned", 40);
 
       Console.WriteLine();
-      string answer = Operation.GetValidatedStringInput("● Do you want to add another course ", "(y/n)");
+      string answer = Operation.GetValidatedStringInput("● Do You Want To Add Another Course ", "(y/n)");
       if (answer == "Invalid input")
       {
-        Operation.OutputMessage("InValid Input");
+        Operation.OutputMessage("Invalid Input");
         return;
       }
 
@@ -175,30 +319,46 @@ public static class DoctorOperations
     }
 
     Console.WriteLine();
-    AnsiConsole.Markup($"[green]Successfully assigned the course[/]\n");
+    AnsiConsole.Markup($"[green]Successfully Assigned The Course[/]\n");
 
     Operation.FinishOption();
   }
-
-  public static void UnAssignCourses()
+  public static void UnassignCourse()
   {
-    var panel01 = new Panel($"[lightcyan1]UnAssign Courses[/]")
+    var panel01 = new Panel($"[lightcyan1]Unassign Course[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
     AnsiConsole.Write(panel01);
 
-    AnsiConsole.MarkupLine($"[silver]▶ Show Assigned Courses By Dr.{sessionDoctor.Name}[/]\n");
+    AnsiConsole.MarkupLine($"[silver]▶ Show Assigned Courses By Dr.{sessionDoctor.FullName}[/]\n");
 
-    var assignedCourses = MainMenu.courses.Where(r => sessionDoctor.CoursesTaughtCodes.Contains(r.CourseCode)).ToList();
+    var assignedCourses = MainMenu.courses.Where(r => sessionDoctor.RegisteredCoursesCodes.Contains(r.CourseCode)).ToList();
 
+    // Create a new table
+    var table = new Table()
+        .AddColumn("[lightcyan1]#[/]")           // Column for numbering
+        .AddColumn("[lightcyan1]Course Name[/]")  // Column for Course Name
+        .AddColumn("[lightcyan1]Course Code[/]")  // Column for Course Code
+        .AddColumn("[lightcyan1]Department[/]")  // Column for Course Code
+        .AddColumn("[lightcyan1]Number of Hours[/]"); // Column for Number of Hours
 
-    var root = new Tree($"▼ Assigned Courses By Dr [lightcyan1]{sessionDoctor.Name}[/]");
-    var node = root.AddNode($"[lightcyan1]i. Course Name[/][gray] - [/][lightcyan1]Course Code[/][gray] - [/][lightcyan1]Exam Code[/][gray] - [/][lightcyan1]Number of Hours[/]");
+    // Add rows for each assigned course
     for (int i = 0; i < assignedCourses.Count; i++)
     {
-      node = root.AddNode($"[lightcyan1]{i + 1}.[/] [white]{assignedCourses[i].CourseName}[gray] - [/]{assignedCourses[i].CourseCode}[/][gray] - [/][lightcyan1]{assignedCourses[i].ExamCode}[/][gray] - [/][lightcyan1]{assignedCourses[i].NoOfHours}[/]");
+      table.AddRow(
+          $"[white]{i + 1}[/]",                             // Row number
+          $"[white]{assignedCourses[i].CourseName}[/]",    // Course Name
+          $"[gray]{assignedCourses[i].CourseCode}[/]",     // Course Code
+          $"[lightcyan1]{assignedCourses[i].Department}[/]", // department
+          $"[lightcyan1]{assignedCourses[i].NoOfHours}[/]" // Number of Hours
+      );
     }
-    AnsiConsole.Write(root);
-    Console.WriteLine();
+
+    // Customize table appearance
+    table.Border = TableBorder.Rounded;
+    table.Title = new TableTitle($"[lightcyan1]..Assigned Courses By Dr {sessionDoctor.FullName}..[/]");
+
+    // Render the table
+    AnsiConsole.Write(table);
 
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
     var option = Console.ReadLine();
@@ -207,15 +367,15 @@ public static class DoctorOperations
       return;
     }
 
-    AnsiConsole.Markup($"[lightcyan1]Choose courses you want to unassign: [/]\n");
+    AnsiConsole.Markup($"[lightcyan1]Choose Courses You Want to unassign: [/]\n");
     bool isAgree = true;
     while (isAgree)
     {
       Console.WriteLine();
       string courseCode = Operation.GetCourseCodeInSystem("● Enter assigned course ", "code");
-      if (courseCode == "Invalid input" || !assignedCourses.Any(r => r.CourseCode == courseCode) || !sessionDoctor.CoursesTaughtCodes.Contains(courseCode))
+      if (courseCode == "Invalid input" || !assignedCourses.Any(r => r.CourseCode == courseCode) || !sessionDoctor.RegisteredCoursesCodes.Contains(courseCode))
       {
-        Operation.OutputMessage("InValid Input");
+        Operation.OutputMessage("Invalid Input");
         return;
       }
 
@@ -227,7 +387,7 @@ public static class DoctorOperations
       {
         enrolledStudents[j].EnrolledCoursesCodes.Remove(courseCode);
 
-        int studentIndex = Operation.GetUserIndex(enrolledStudents[j].Code, 2);
+        int studentIndex = Operation.GetUserIndex(enrolledStudents[j].Code);
         MainMenu.students[studentIndex] = enrolledStudents[j];
       }
       MainMenu._userRepository.SaveStudentData(MainMenu.students);
@@ -242,18 +402,18 @@ public static class DoctorOperations
       MainMenu._examRepository.SaveExamData(MainMenu.exams);
 
       //optimize doctor who assigned the course
-      sessionDoctor.CoursesTaughtCodes.Remove(courseCode);
-      int sessionDoctorIndex = Operation.GetUserIndex(sessionDoctor.Code,1);
+      sessionDoctor.RegisteredCoursesCodes.Remove(courseCode);
+      int sessionDoctorIndex = Operation.GetUserIndex(sessionDoctor.Code);
       MainMenu.doctors[sessionDoctorIndex] = sessionDoctor;
       MainMenu._userRepository.SaveDoctorData(MainMenu.doctors);
 
       //save course to courses list
-      MainMenu.courses[courseIndex].DoctorCode = "D000";
-      MainMenu.courses[courseIndex].ExamCode = "E000";
+      MainMenu.courses[courseIndex].DoctorCode = "D0000";
+      MainMenu.courses[courseIndex].ExamCode = "E0000";
       MainMenu._courseRepository.SaveCourseData(MainMenu.courses);
 
       Console.WriteLine();
-      string answer = Operation.GetValidatedStringInput("● Do you want to unassign another course ", "(y/n)");
+      string answer = Operation.GetValidatedStringInput("● Do You Want To Unassign Another Course ", "(y/n)");
       if (answer == "Invalid input")
       {
         Operation.OutputMessage("InValid Input");
@@ -267,21 +427,20 @@ public static class DoctorOperations
     }
 
     Console.WriteLine();
-    AnsiConsole.Markup($"[green]Courses unassigned successfully...[/]\n");
+    AnsiConsole.Markup($"[green]Courses Unassigned Successfully...[/]\n");
 
     Operation.FinishOption();
   }
-
   public static void ViewAssignedCourses()
   {
     var panel01 = new Panel($"[lightcyan1]View Assigned Courses[/]")
    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
     AnsiConsole.Write(panel01);
 
-    AnsiConsole.MarkupLine($"[silver]▶ Show Assigned Courses By Dr. {sessionDoctor.Name}[/]\n");
+    AnsiConsole.MarkupLine($"[silver]▶ Show Assigned Courses By Dr. {sessionDoctor.FullName}[/]\n");
 
     //var assignedCourses = GetAssignedCoursesByTheDoctor();
-    var assignedCourses = MainMenu.courses.Where(r => sessionDoctor.CoursesTaughtCodes.Contains(r.CourseCode)).ToList();
+    var assignedCourses = MainMenu.courses.Where(r => sessionDoctor.RegisteredCoursesCodes.Contains(r.CourseCode)).ToList();
 
     // Create a table
     var table = new Table();
@@ -290,22 +449,24 @@ public static class DoctorOperations
     table.AddColumn(new TableColumn("[lightcyan1]Course Name[/]").Centered());
     table.AddColumn(new TableColumn("[lightcyan1]Course Code[/]").Centered());
     table.AddColumn(new TableColumn("[lightcyan1]Exam Code[/]").Centered());
+    table.AddColumn(new TableColumn("[lightcyan1]Department[/]").Centered());
     table.AddColumn(new TableColumn("[lightcyan1]No. Students[/]").Centered());
     table.AddColumn(new TableColumn("[lightcyan1]No. Hours[/]").Centered());
 
     // Set table border and title
     table.Border(TableBorder.Rounded);
-    table.Title($"[bold]▼ Assigned Courses By [/][lightcyan1]Dr.{sessionDoctor.Name}[/]");
+    table.Title($"[bold]▼ Assigned Courses By [/][lightcyan1]Dr.{sessionDoctor.FullName}[/]");
 
     AnsiConsole.WriteLine();
     for (int i = 0; i < assignedCourses.Count; i++)
     {
       table.AddRow($"{i + 1}",
-                           $"[thistle1][italic]{assignedCourses[i].CourseName}[/][/]",
-                           $"[thistle1]{assignedCourses[i].CourseCode}[/]",
-                           $"[lightsteelblue1]{assignedCourses[i].ExamCode}[/]",
-                           $"[lightsteelblue1]{assignedCourses[i].NoStudents}[/]",
-                           $"[lightcoral]{assignedCourses[i].NoOfHours}[/]"
+                           $"[orangered1][italic]{assignedCourses[i].CourseName}[/][/]",
+                           $"[yellow]{assignedCourses[i].CourseCode}[/]",
+                           $"[yellow]{assignedCourses[i].ExamCode}[/]",
+                           $"[bold]{assignedCourses[i].Department}[/]",
+                           $"[yellow2]{assignedCourses[i].NoStudents}[/]",
+                           $"[orangered1]{assignedCourses[i].NoOfHours}[/]"
                   );
     }
     // Render the table to the console
@@ -316,15 +477,14 @@ public static class DoctorOperations
     Operation.FinishOption();
   }
 
-
-  public static void AddExams()
+  public static void CreateNewExam()
   {
-    var panel01 = new Panel($"[lightcyan1]Add Exams[/]")
+    var panel01 = new Panel($"[lightcyan1]Create New Exam[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
     AnsiConsole.Write(panel01);
     Console.WriteLine();
 
-    AnsiConsole.MarkupLine($"[lightcyan1]Courses Taught[/]: ({string.Join(",", sessionDoctor.CoursesTaughtCodes)})\n");
+    AnsiConsole.MarkupLine($"[lightcyan1]Registered Courses Codes[/]: ({string.Join(",", sessionDoctor.RegisteredCoursesCodes)})\n");
 
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
     var option = Console.ReadLine();
@@ -337,7 +497,6 @@ public static class DoctorOperations
     {
       Console.WriteLine();
       AnsiConsole.MarkupLine($"[silver]▶ Input Exam Details[/]\n");
-
 
       Exam exam = GetExam();
 
@@ -355,7 +514,7 @@ public static class DoctorOperations
         MainMenu._courseRepository.SaveCourseData(MainMenu.courses);
 
         //optimize doctor data
-        int doctorIndex = Operation.GetUserIndex(sessionDoctor.Code, 1);
+        int doctorIndex = Operation.GetUserIndex(sessionDoctor.Code);
         MainMenu.doctors[doctorIndex].DoctorExamsCodes.Add(exam.ExamCode);
         MainMenu.doctors[doctorIndex] = sessionDoctor;
         MainMenu._userRepository.SaveDoctorData(MainMenu.doctors);
@@ -375,8 +534,7 @@ public static class DoctorOperations
       Operation.OutputMessage($"Something went wrong: {ex.Message}");
     }
   }
-
-  public static void RemoveExams()
+  public static void RemoveExam()
   {
     var panel01 = new Panel($"[lightcyan1]Remove Exams[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
@@ -385,16 +543,32 @@ public static class DoctorOperations
 
     AnsiConsole.MarkupLine($"[silver]▶ Show Exams By Doctor[/]\n");
 
-
     var doctorExams = MainMenu.exams.Where(r => sessionDoctor.DoctorExamsCodes.Contains(r.ExamCode)).ToList();
 
-    var root = new Tree($"▼ Exam By Dr [lightcyan1]{sessionDoctor.Name}[/]");
-    var node = root.AddNode($"[lightcyan1]i. Exam Name[/][gray] - [/][lightcyan1]Exam Code[/][gray] - [/][lightcyan1]Course Code[/][gray] - [/][lightcyan1]Number of Questions[/]");
+    // Create a new table
+    var table = new Table()
+        .AddColumn("[lightcyan1]#[/]")                    // Column for numbering
+        .AddColumn("[lightcyan1]Exam Name[/]")            // Column for Exam Name
+        .AddColumn("[lightcyan1]Exam Code[/]")            // Column for Exam Code
+        .AddColumn("[lightcyan1]Course Code[/]");         // Column for Course Code
+
+    // Add rows for each exam
     for (int i = 0; i < doctorExams.Count; i++)
     {
-      node = root.AddNode($"[lightcyan1]{i + 1}.[/] [white]{doctorExams[i].ExamName}[gray] - [/]{doctorExams[i].ExamCode}[/][gray] - [/][lightcyan1]{doctorExams[i].CourseCode}[/][gray] - [/][lightcyan1]{doctorExams[i].NoQuestions}[/]");
+      table.AddRow(
+   $"[white]{i + 1}[/]",                       // Row number
+          $"[white]{doctorExams[i].ExamName}[/]",           // Exam Name
+          $"[gray]{doctorExams[i].ExamCode}[/]",            // Exam Code
+          $"[lightcyan1]{doctorExams[i].CourseCode}[/]"    // Course Code
+      );
     }
-    AnsiConsole.Write(root);
+
+    // Customize table appearance
+    table.Border = TableBorder.Rounded;
+    table.Title = new TableTitle($"[lightcyan1]Exams By Dr {sessionDoctor.FullName}[/]");
+
+    // Render the table
+    AnsiConsole.Write(table);
 
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
     var option = Console.ReadLine();
@@ -404,14 +578,14 @@ public static class DoctorOperations
     }
 
     Console.WriteLine();
-    AnsiConsole.Markup($"[lightcyan1]Choose exams you want to remove: [/]\n");
+    AnsiConsole.Markup($"[lightcyan1]Choose Exam Code To Remove: [/]\n");
     bool isAgree = true;
     while (isAgree)
     {
-      string examCode = Operation.GetExamCodeInSystem("● Enter doctor exam ", "code");
+      string examCode = Operation.GetExamCodeInSystem("● Enter The Exam ", "Code");
       if (examCode == "Invalid input" || !sessionDoctor.DoctorExamsCodes.Contains(examCode))
       {
-        Operation.OutputMessage("InValid Code or exam does not exist in doctor exams");
+        Operation.OutputMessage("Invalid Code or exam does not exist in doctor exams");
         return;
       }
 
@@ -420,12 +594,12 @@ public static class DoctorOperations
       int examIndex = Operation.GetExamIndex(examCode);
       //optmize course [examCode]
       int courseIndex = Operation.GetCourseIndex(MainMenu.exams[examIndex].CourseCode);
-      MainMenu.courses[courseIndex].ExamCode = "E000";
+      MainMenu.courses[courseIndex].ExamCode = "E0000";
       MainMenu._courseRepository.SaveCourseData(MainMenu.courses);
 
       //save doctor in doctors list
       sessionDoctor.DoctorExamsCodes.Remove(examCode);
-      int sessionDoctorIndex = Operation.GetUserIndex(sessionDoctor.Code, 1);
+      int sessionDoctorIndex = Operation.GetUserIndex(sessionDoctor.Code);
       MainMenu.doctors[sessionDoctorIndex] = sessionDoctor;
       MainMenu._userRepository.SaveDoctorData(MainMenu.doctors);
 
@@ -434,7 +608,7 @@ public static class DoctorOperations
       MainMenu._examRepository.SaveExamData(MainMenu.exams);
 
 
-      string answer = Operation.GetValidatedStringInput("● Do you want to remove another exam ", "(y/n)");
+      string answer = Operation.GetValidatedStringInput("● Do You Want To Remove Another Exam ", "(y/n)");
       if (answer == "Invalid input")
       {
         Operation.OutputMessage("InValid Input");
@@ -448,21 +622,18 @@ public static class DoctorOperations
     }
 
     Console.WriteLine();
-    AnsiConsole.Markup($"[green]Exam removed successfully...[/]\n");
+    AnsiConsole.Markup($"[green]Exam Removed Successfully...[/]\n");
 
     Operation.FinishOption();
-
   }
-
   public static void ViewExams()
   {
-    var panel01 = new Panel($"[lightcyan1]View Assigned Courses[/]")
+    var panel01 = new Panel($"[lightcyan1]View All Exams[/]")
    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
     AnsiConsole.Write(panel01);
     Console.WriteLine();
 
-    AnsiConsole.MarkupLine($"[silver]▶ Show Exams By Dr. {sessionDoctor.Name}[/]\n");
-
+    AnsiConsole.MarkupLine($"[silver]▶ Show All Exams By Dr. {sessionDoctor.FullName}[/]\n");
 
     var doctorExams = MainMenu.exams.Where(r => sessionDoctor.DoctorExamsCodes.Contains(r.ExamCode)).ToList();
 
@@ -478,7 +649,7 @@ public static class DoctorOperations
 
     // Set table border and title
     table.Border(TableBorder.Rounded);
-    table.Title($"[bold]▼ Exams By [/][lightcyan1]Dr.{sessionDoctor.Name}[/]");
+    table.Title($"[bold]▼ Exams By [/][lightcyan1]Dr.{sessionDoctor.FullName}[/]");
 
     AnsiConsole.WriteLine();
     for (int i = 0; i < doctorExams.Count; i++)
@@ -500,8 +671,7 @@ public static class DoctorOperations
     Operation.FinishOption();
   }
 
-
-  public static void ViewStudentsOfSpecificCourse()
+  public static void ShowStudentsOfSpecificCourse()
   {
     var panel01 = new Panel($"[lightcyan1]View Enrolled Students[/]")
    .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
@@ -509,7 +679,7 @@ public static class DoctorOperations
     Console.WriteLine();
 
     AnsiConsole.MarkupLine($"[silver]▶ Show Student Enrolled Doctor Courses By Course-Code[/]\n");
-    AnsiConsole.MarkupLine($"[lightcyan1]Courses Taught[/]: ({string.Join(",", sessionDoctor.CoursesTaughtCodes)})\n");
+    AnsiConsole.MarkupLine($"[lightcyan1]Courses Taught[/]: ({string.Join(",", sessionDoctor.RegisteredCoursesCodes)})\n");
 
     Console.WriteLine();
     AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
@@ -519,10 +689,11 @@ public static class DoctorOperations
       return;
     }
 
-    var assignedCourses = MainMenu.courses.Where(r => sessionDoctor.CoursesTaughtCodes.Contains(r.CourseCode)).ToList();
+    var assignedCourses = MainMenu.courses.Where(r => sessionDoctor.RegisteredCoursesCodes.Contains(r.CourseCode)).ToList();
 
+    Console.WriteLine();
     string courseCode = Operation.GetCourseCodeInSystem("● Enter assigned course ", "code");
-    if (courseCode == "Invalid input" || !sessionDoctor.CoursesTaughtCodes.Contains(courseCode))
+    if (courseCode == "Invalid input" || !sessionDoctor.RegisteredCoursesCodes.Contains(courseCode))
     {
       Operation.OutputMessage("Course code not exist");
       return;
@@ -536,9 +707,10 @@ public static class DoctorOperations
     table.AddColumn(new TableColumn("[lightcyan1]I[/]").Centered());
     table.AddColumn(new TableColumn("[lightcyan1]Student Name[/]").Centered());
     table.AddColumn(new TableColumn("[lightcyan1]Student Code[/]").Centered());
-    table.AddColumn(new TableColumn("[lightcyan1]Student Email[/]").Centered());
-    table.AddColumn(new TableColumn("[lightcyan1]Student GPA[/]").Centered());
-    table.AddColumn(new TableColumn("[lightcyan1]Student EnrolledCourses[/]").Centered());
+    table.AddColumn(new TableColumn("[lightcyan1]Marks[/]").Centered());
+    table.AddColumn(new TableColumn("[lightcyan1]GPA[/]").Centered());
+    table.AddColumn(new TableColumn("[lightcyan1]Grade[/]").Centered());
+    table.AddColumn(new TableColumn("[lightcyan1]Department[/]").Centered());
 
     // Set table border and title
     table.Border(TableBorder.Rounded);
@@ -548,11 +720,12 @@ public static class DoctorOperations
     for (int i = 0; i < enrolledStudents.Count; i++)
     {
       table.AddRow($"{i + 1}",
-                           $"[thistle1][italic]{enrolledStudents[i].Name}[/][/]",
+                           $"[thistle1][italic]{enrolledStudents[i].FullName}[/][/]",
                            $"[thistle1]{enrolledStudents[i].Code}[/]",
-                           $"[lightsteelblue1]{enrolledStudents[i].Email}[/]",
+                           $"[lightsteelblue1]{enrolledStudents[i].Marks}[/]",
                            $"[lightsteelblue1]{enrolledStudents[i].GPA}[/]",
-                           $"[lightcoral]{string.Join(",", enrolledStudents[i].EnrolledCoursesCodes)}[/]"
+                           $"[lightsteelblue1]{enrolledStudents[i].Grade}[/]",
+                           $"[lightsteelblue1]{enrolledStudents[i].Department}[/]"
                   );
     }
     // Render the table to the console
@@ -562,20 +735,97 @@ public static class DoctorOperations
 
     Operation.FinishOption();
   }
+  public static void GiveStudentsMarks()
+  {
+    var panel01 = new Panel($"[lightcyan1]Search Enrolled Student[/]")
+   .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
+    AnsiConsole.Write(panel01);
+    Console.WriteLine();
+
+    AnsiConsole.MarkupLine($"[silver]▶ Show Doctor Courses By Course-Code[/]\n");
+    AnsiConsole.MarkupLine($"[lightcyan1]Courses Taught[/]: ({string.Join(",", sessionDoctor.RegisteredCoursesCodes)})\n");
+
+    Console.WriteLine();
+    AnsiConsole.Markup("● Tap [red]'q'[/] To Quit: ");
+    var option = Console.ReadLine();
+    if (option.ToLower() == "q")
+    {
+      return;
+    }
+
+    var registeredCourses = MainMenu.courses.Where(r => sessionDoctor.RegisteredCoursesCodes.Contains(r.CourseCode)).ToList();
+
+    string courseCode = Operation.GetCourseCodeInSystem("● Enter Registered Course ", "Code");
+    if (courseCode == "Invalid input" || !sessionDoctor.RegisteredCoursesCodes.Contains(courseCode))
+    {
+      Operation.OutputMessage("Course code not exist");
+      return;
+    }
+
+    Console.WriteLine();
+    var enrolledStudents = MainMenu.students.Where(r => r.EnrolledCoursesCodes.Contains(courseCode)).ToList();
+    AnsiConsole.Markup($"● [lightcyan1]Search Student Code To Give Grade: [/]\n");
+    Console.WriteLine();
+
+    bool isAgree = true;
+    while (isAgree)
+    {
+      Console.WriteLine();
+      string studentCode = Operation.GetUserCodeInSystem("● Enter Student ", "Code");
+      if (studentCode == "Invalid input" || !enrolledStudents.Any(r => r.Code == studentCode))
+      {
+        Operation.OutputMessage("Invalid Code");
+        return;
+      }
+
+      AnsiConsole.Markup($"Enter [gold3_1]Mark[/]: ");
+      double marks = Convert.ToDouble(Console.ReadLine());
+
+      Operation.LoadingOperation("▶ Giving A Marks", 50);
+
+      int studentIndex = Operation.GetUserIndex(studentCode);
+      //save student to doctors list
+      MainMenu.students[studentIndex].Marks += marks;
+      MainMenu.students[studentIndex].GPA = Operation.CalculateGPA(MainMenu.students[studentIndex]);
+      Operation.CalculateGrade(MainMenu.students[studentIndex]);
+
+      MainMenu._userRepository.SaveStudentData(MainMenu.students);
+
+      Operation.LoadingOperation("Successfully Assigned", 40);
+
+      Console.WriteLine();
+      string answer = Operation.GetValidatedStringInput("● Do You Want To Give Marks To Another Student ", "(y/n)");
+      if (answer == "Invalid input")
+      {
+        Operation.OutputMessage("Invalid Input");
+        return;
+      }
+
+      if (answer.ToLower() != "y")
+      {
+        isAgree = false;
+      }
+    }
+
+    Console.WriteLine();
+    AnsiConsole.Markup($"[green]Successfully Gived Marks To The Students[/]\n");
+
+    Operation.FinishOption();
+  }
 
   private static Exam GetExam()
   {
     string str = "Invalid input";
 
-    string courseCode = Operation.GetCourseCodeInSystem("● Enter system course ", "code");
+    string courseCode = Operation.GetCourseCodeInSystem("● Enter System Course ", "Code");
     int courseIndex = Operation.GetCourseIndex(courseCode);
     if (courseCode == "Invalid input")
     {
-      Console.WriteLine("InValid Code or course does not exist in doctor assigned courses");
+      Console.WriteLine("Invalid Code or course does not exist in doctor assigned courses");
       return null;
     }
 
-    if (!sessionDoctor.CoursesTaughtCodes.Contains(courseCode) || MainMenu.courses[courseIndex].ExamCode != "E000")
+    if (!sessionDoctor.RegisteredCoursesCodes.Contains(courseCode) || MainMenu.courses[courseIndex].ExamCode != "E0000")
     {
       Console.WriteLine("InValid Code or exam already added!");
       return null;
@@ -598,15 +848,15 @@ public static class DoctorOperations
     DateTime examDate = default;
 
     Thread.Sleep(50);
-    int noQuestions = Operation.GetValidIntInput("● Enter Exam ", "No. Questions", 50, 100);
+    int noQuestions = Operation.GetValidIntInput("● Enter Exam ", "No. Questions (50 -> 100)", 50, 100);
 
-    return new Exam(examCode, examName, courseCode, examDate, noQuestions);
+    return new Exam(examCode, examName, courseCode, doctorCode, examDate, noQuestions);
   }
   private static int GetAssignedCourseIndex(string code)
   {
-    for (int i = 0; i <= sessionDoctor.CoursesTaughtCodes.Count - 1; i++)
+    for (int i = 0; i <= sessionDoctor.RegisteredCoursesCodes.Count - 1; i++)
     {
-      if (sessionDoctor.CoursesTaughtCodes[i] == code)
+      if (sessionDoctor.RegisteredCoursesCodes[i] == code)
       {
         return i;
       }
@@ -634,7 +884,7 @@ public static class DoctorOperations
       string code = Console.ReadLine();
 
       // Check if the entered code is in the system
-      if (sessionDoctor.CoursesTaughtCodes.Any(u => u == code))
+      if (sessionDoctor.RegisteredCoursesCodes.Any(u => u == code))
       {
         return code;
       }

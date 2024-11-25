@@ -9,20 +9,20 @@ namespace CollegeSystem.Core;
 
 public class Student : Person
 {
-
   public double GPA { get; set; }
+  public double Marks { get; set; }
   public string Grade { get; set; }
   public string Gender { get; set; }
   public string YearOfStudy { get; set; }
+  public int NoOfCreditHours { get; set; }
+  public int NumberOfCoursesHours { get; set; }
   public List<string> EnrolledCoursesCodes { get; set; } = new List<string>();
 
   public Student() : base()
   {
 
   }
-
   public Student(
-                  string nationalId,
                   string code,
                   string name,
                   string password,
@@ -30,17 +30,23 @@ public class Student : Person
                   string department,
                   bool activate,
                   double gpa,
+                  double marks,
                   string grade,
                   string gender,
                   string yearOfStudy,
+                  int noOfCreditHours,
+                  int numberOfCoursesHoursAccepted,
                   List<string> enrolledCourses
                 )
-    : base(nationalId, code, name, password, email, department, activate)
+    : base(code, name, password, email, department, activate)
   {
     GPA = gpa;
     Gender = gender;
+    Marks = marks;
     Grade = grade;
     YearOfStudy = yearOfStudy;
+    NoOfCreditHours = noOfCreditHours;
+    NumberOfCoursesHours = numberOfCoursesHoursAccepted;
     EnrolledCoursesCodes = enrolledCourses;
   }
 
@@ -48,7 +54,7 @@ public class Student : Person
   {
     return base.ToString() +
            $"GPA: {GPA}\n" +
-           $"Grade: {Grade}" +
+           $"Grade: {Marks}" +
            $"Gender: {Gender}\n" +
            $"Year Of Study: {YearOfStudy}\n" +
            $"Courses: {string.Join(",", EnrolledCoursesCodes)}";
@@ -58,13 +64,10 @@ public class Student : Person
   public override void PrintUser(string color)
   {
     Thread.Sleep(60);
-    AnsiConsole.Markup($"[bold]├─ National Id:[/] [{color}]{NationalId}[/]\n");
-
-    Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Code:[/] [{color}]{Code}[/]\n");
 
     Thread.Sleep(60);
-    AnsiConsole.Markup($"[bold]├─ Name:[/] [{color}]{Name}[/]\n");
+    AnsiConsole.Markup($"[bold]├─ Full Name:[/] [{color}]{FullName}[/]\n");
 
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Password:[/] [{color}]{Password}[/]\n");
@@ -76,19 +79,12 @@ public class Student : Person
     AnsiConsole.Markup($"[bold]├─ Department:[/] [{color}]{Department}[/]\n");
 
     Thread.Sleep(60);
-    AnsiConsole.Markup($"[bold]├─ Gpa:[/] [{color}]{GPA}[/]\n");
-
-    Thread.Sleep(60);
-    AnsiConsole.Markup($"[bold]├─ Grade:[/] [{color}]{Grade}[/]\n");
-
-    Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Gender:[/] [{color}]{Gender}[/]\n");
 
     Thread.Sleep(60);
     AnsiConsole.Markup($"[bold]├─ Year Of Study:[/] [{color}]{YearOfStudy}[/]\n");
 
     Thread.Sleep(60);
-    AnsiConsole.Markup($"[bold]└─ Enrolled Courses Codes:[/] [{color}]{string.Join(",", EnrolledCoursesCodes)}[/]\n");
-
+    AnsiConsole.Markup($"[bold]└─ No. Of Credit Hours:[/] [{color}]{NoOfCreditHours}[/]\n");
   }
 }

@@ -38,16 +38,16 @@ public class StudentPage
       .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
       AnsiConsole.Write(panel);
 
-      AnsiConsole.Markup($"[bold]● Welcome Student: [thistle1]{_sessionStudent.Name}[/] To College System\n\n[/]");
+      AnsiConsole.Markup($"[bold]● Welcome Student: [thistle1]{_sessionStudent.FullName}[/] To College System\n\n[/]");
 
       string[] mainMenuOptions =
       {
-                    "Personal Info",
-                    "Courses Section",
-                    "View Grade",
-                    "View Exams Schedule",
-                    "Exit Student System"
-                };
+        "Profile Page",
+        "Courses Section",
+        "View Grade",
+        "View Exams Schedule",
+        "Exit Student System"
+      };
 
       Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━┓");
       AnsiConsole.MarkupLine("┃  [thistle1][italic]Main Menu Option[/][/]  ┃");
@@ -63,8 +63,8 @@ public class StudentPage
 
       switch (selection)
       {
-        case "Personal Info":
-          ViewPersonalInfo();
+        case "Profile Page":
+          ProfilePage();
           break;
         case "Courses Section":
           CoursesSection();
@@ -86,7 +86,7 @@ public class StudentPage
   }
 
 
-  private void ViewPersonalInfo()
+  private void ProfilePage()
   {
     Console.Clear();
 
@@ -94,16 +94,17 @@ public class StudentPage
     rule.Justification = Justify.Left;
     AnsiConsole.Write(rule);
 
-    var panel = new Panel($"[thistle1]View Personal Info[/]")
+    var panel = new Panel($"[thistle1]View Profile Page[/]")
     .Border(BoxBorder.Rounded).BorderColor(Color.Silver);
     AnsiConsole.Write(panel);
 
     string[] userMenuOptions =
     {
-                    "View Personal Info",
-                    "Update Personal Profile",
-                    "Exit To Main Menu"
-                };
+      "Profile Info",
+      "Update Personal Profile",
+      "Notify Section",
+      "Exit To Main Menu"
+    };
 
     Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
     AnsiConsole.MarkupLine("┃  [thistle1][italic]Student Info Menu Option[/][/]  ┃");
@@ -123,19 +124,21 @@ public class StudentPage
     AnsiConsole.Write(rule02);
     switch (selection)
     {
-      case "View Personal Info":
-        StudentOperations.ViewPersonalProfile();
+      case "Profile Info":
+        StudentOperations.ProfileInfo();
         break;
       case "Update Personal Profile":
         StudentOperations.UpdatePersonalProfile();
+        break;
+      case "Notify Section":
+        StudentOperations.NotifySection();
         break;
       case "Exit To Main Menu":
         return;
     }
 
-    ViewPersonalInfo();
+    ProfilePage();
   }
-
 
   private void CoursesSection()
   {
@@ -151,11 +154,12 @@ public class StudentPage
 
     string[] courseMenuOptions =
     {
-                    "Register Courses",
-                    "View Enrolled Courses",
-                    "View Enrolled Course Details",
-                    "Exit To Main Menu"
-                };
+      "Enroll Course",
+      "Unenroll Course",
+      "View Enrolled Courses",
+      "View Enrolled Course Details",
+      "Exit To Main Menu"
+    };
 
     Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
     AnsiConsole.MarkupLine("┃  [thistle1][italic]Courses Section Menu Option[/][/]  ┃");
@@ -175,8 +179,11 @@ public class StudentPage
     AnsiConsole.Write(rule02);
     switch (selection)
     {
-      case "Register Courses":
-        StudentOperations.RegisterCourses();
+      case "Enroll Course":
+        StudentOperations.EnrollCourse();
+        break;
+      case "Unenroll Course":
+        StudentOperations.UnenrollCourse();
         break;
       case "View Enrolled Courses":
         StudentOperations.ViewEnrolledCourses();
