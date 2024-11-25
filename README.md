@@ -1,94 +1,65 @@
-<<<<<<< HEAD
-=======
-# 🎓 College Management System
+# College Management System 🎓
 
-Welcome to the College Management System! This project is a C# .NET Core console application designed to manage various aspects of a college, including students, doctors, courses, assignments, and quizzes.
+A **console-based application** built with **C# and .NET** for managing a college system. This project provides functionalities for administrators, doctors, and students to interact with various aspects of the college's operations in a user-friendly and visually appealing console interface.
 
-## 📋 Table of Contents
-- [Introduction](#introduction)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-
-## 🏫 Introduction
-The College Management System is a comprehensive application aimed at simplifying and automating the management of college operations. The system provides different functionalities for managers, doctors, and students, ensuring efficient and organized handling of college data.
+---
 
 ## ✨ Features
-- **Login and Sign-Up:**
-  - Doctor and student sign-up using national ID to retrieve a code and set a password.
-  - Role-based sign-in with validation for manager, doctor, and student access.
-- **Role-Based Operations:**
-  - **Manager:** Full control of the system.
-  - **Doctor:** Specific operations including course management.
-  - **Student:** Operations related to course enrollment and grade management.
-- **Data Management:**
-  - Pre-recorded dataset for doctors, students, and the manager.
-  - Data handling classes for reading and writing to text files.
-- **User Interface:**
-  - Enhanced console UI with Spectre.Console for better visual appeal.
-  - Modern and contemporary design with animations and text effects.
 
-## 🛠️ Installation
-To install and run the College Management System, follow these steps:
+### 1. **Login and Sign-Up System** 🔐
+- **Sign-Up**:
+  - **Doctors** and **Students** can sign up using their National ID to retrieve their code and set a password.
+- **Login**:
+  - Credentials are validated to identify the user's role: Manager, Doctor, or Student.
+  - Redirects users to their respective menus based on their role.
 
-1. **Clone the repository:**
-    ```bash
-    git clone https://github.com/MahmoudNofaal/CollegeManagementSystem.git
-    ```
-2. **Navigate to the project directory:**
-    ```bash
-    cd CollegeManagementSystem
-    ```
-3. **Open the solution in Visual Studio:**
-    ```bash
-    start CollegeManagementSystem.sln
-    ```
-4. **Build the solution in Visual Studio.**
+### 2. **Role-Specific Functionalities**
+- **Manager**:
+  - Full control of the system, including managing users and overseeing the entire dataset.
+- **Doctors**:
+  - View and manage assigned courses.
+  - Interact with student grades and assignments.
+- **Students**:
+  - Enroll in courses, view grades, and manage personal information.
 
-## 🚀 Usage
-Once the project is set up and built, you can run the application through Visual Studio. The main menu will guide you through different functionalities based on your role (Manager, Doctor, or Student).
+### 3. **Dataset Management** 🗂
+- Pre-loaded datasets for Doctors, Students, and Manager to simulate real-world usage.
+- Data is stored in text files for persistence, using a `DataManager`-like approach to read/write files.
 
-### Manager Operations:
-- Full control over the system.
-- Access to all functionalities.
+### 4. **Enhanced Console UI** 🎨
+- Modern and engaging UI design using **Spectre.Console** for visually appealing elements:
+  - Tables for structured data.
+  - Colored text for better readability.
+  - Animations and visual effects for a dynamic user experience.
 
-### Doctor Operations:
-- Manage courses and assignments.
-- View and grade student assignments.
+---
 
-### Student Operations:
-- Enroll in courses.
-- View grades and assignments.
+## 🛠 Project Structure
 
-## 🗂️ Project Structure
-The solution is divided into multiple projects within Visual Studio:
-- **Core:** Contains shared models and logic.
-- **Data:** Handles data access and storage.
-- **UI:** Contains console-based UI for interaction.
-- **Authentication:** Manages user login and registration.
+### Solution Components:
+1. **Core**: Contains shared models and business logic.
+2. **Data**: Manages data access and storage, including dataset handling.
+3. **UI**: Implements a console-based interface for user interactions.
+4. **Authentication**: Handles login and sign-up functionalities.
 
-## 🤝 Contributing
-Contributions are welcome! If you have any ideas, suggestions, or improvements, feel free to open an issue or submit a pull request.
+### Roles and Details:
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Make your changes and commit them (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Open a pull request.
+#### 📌 **Doctors**
+- **Properties**:
+  - Code, National ID, Name, Department, Email, Courses, Password.
+- **Functionalities**:
+  - Manage courses and interact with students.
 
-## 📜 License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+#### 📌 **Students**
+- **Properties**:
+  - Code, National ID, Name, Department, GPA, Courses, Password.
+- **Functionalities**:
+  - Enroll in courses and view academic progress.
 
-## 📧 Contact
-For any inquiries or issues, please contact me at:
+---
 
-- **Email:** [ma7nemahmoud73@gmail.com](mailto:ma7nemahmoud73@gmail.com)
-- **GitHub:** [MahmoudNofaal](https://github.com/MahmoudNofaal)
-- **LinkedIn:** [Mahmoud Abdelnaby](https://www.linkedin.com/in/mahmoud-abdelnaby-215bb1256/)
+## 🚀 How to Run
 
-Thank you for using the College Management System!
->>>>>>> 9b7562ba6489d389006c631c659c206f5ab8022a
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/MahmoudNofaal/CollegeManagementSystem.git
